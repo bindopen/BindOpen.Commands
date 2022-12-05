@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commands.Abstrations", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0AAA82C0-B44D-40AA-B552-9FBB3FBB1AC1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BindOpen.Commands.Tests", "tests\Commands.Tests\BindOpen.Commands.Tests.csproj", "{9D76BF16-53A5-4B12-924E-BE407C2FD965}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commands.Tests", "tests\BindOpen.Commands.Tests\Commands.Tests.csproj", "{BBE0AB59-581E-4ABC-9A39-DCA6A80B8DB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,16 +36,16 @@ Global
 		{107A0C46-9601-40D2-ABE9-F84023BB1A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{107A0C46-9601-40D2-ABE9-F84023BB1A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{107A0C46-9601-40D2-ABE9-F84023BB1A84}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D76BF16-53A5-4B12-924E-BE407C2FD965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D76BF16-53A5-4B12-924E-BE407C2FD965}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D76BF16-53A5-4B12-924E-BE407C2FD965}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D76BF16-53A5-4B12-924E-BE407C2FD965}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBE0AB59-581E-4ABC-9A39-DCA6A80B8DB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBE0AB59-581E-4ABC-9A39-DCA6A80B8DB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBE0AB59-581E-4ABC-9A39-DCA6A80B8DB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBE0AB59-581E-4ABC-9A39-DCA6A80B8DB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{9D76BF16-53A5-4B12-924E-BE407C2FD965} = {0AAA82C0-B44D-40AA-B552-9FBB3FBB1AC1}
+		{BBE0AB59-581E-4ABC-9A39-DCA6A80B8DB4} = {0AAA82C0-B44D-40AA-B552-9FBB3FBB1AC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {96B56BCB-1F4B-4319-991B-1BABA2FB5443}
