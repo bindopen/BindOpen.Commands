@@ -38,7 +38,7 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="BindOpen.Framework.MetaData" Version="1.1.10" />
   </ItemGroup>
