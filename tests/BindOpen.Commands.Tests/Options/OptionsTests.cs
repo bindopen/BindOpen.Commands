@@ -1,10 +1,12 @@
-﻿using BindOpen.Logging;
+﻿using BindOpen.Commands;
+using BindOpen.Commands.Options;
+using BindOpen.Logging;
 using NUnit.Framework;
 
 namespace BindOpen.Tests.Logging
 {
     [TestFixture, Order(400)]
-    public class OptionSpecTests
+    public class OptionsTests
     {
         private IBdoLog _log;
 
@@ -22,7 +24,13 @@ namespace BindOpen.Tests.Logging
         [Test, Order(1)]
         public void CreateOptionsTest()
         {
+            var options = BdoCommands.NewOptionSet(
+                BdoCommands.NewOption("--version", "-v"),
+                BdoCommands.NewOption("--help", "-h"));
 
+            var args = new[] { "--version", "-h" };
+
+            var parameters = args.ParseArguments(options);
         }
     }
 }
