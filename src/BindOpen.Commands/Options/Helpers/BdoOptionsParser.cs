@@ -14,7 +14,10 @@ namespace BindOpen.Commands.Options
         /// <param name="arg">The argument to consider.</param>
         /// <param name="aliasIndex">The alias index to consider. -2 not found. -1 Name matches. otherwise the index of matched alias.</param>
         /// <returns>Returns True if the specified matches this instance.</returns>
-        public static bool IsArgumentMarching(this IOptionSpec spec, string arg, out int aliasIndex)
+        public static bool IsArgumentMarching(
+            this IOption spec,
+            string arg,
+            out int aliasIndex)
         {
             aliasIndex = -2;
             if (spec != null && arg != null)
@@ -45,7 +48,7 @@ namespace BindOpen.Commands.Options
         /// <param name="spec">The specification to consider.</param>
         /// <param name="arg">The argument to consider.</param>
         /// <returns>Returns True if the specified matches this instance.</returns>
-        public static bool IsArgumentMarching(this IOptionSpec spec, string arg)
+        public static bool IsArgumentMarching(this IOption spec, string arg)
         {
             return spec.IsArgumentMarching(arg, out _);
         }
