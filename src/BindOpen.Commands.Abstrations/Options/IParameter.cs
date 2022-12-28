@@ -1,16 +1,16 @@
 ﻿using BindOpen.Framework.MetaData.Elements;
-using System.Collections.Generic;
 
 namespace BindOpen.Commands.Options
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface IOptionSpec : IScalarElementSpec
+    public interface IParameter : IScalarElement
     {
         /// <summary>
         /// 
         /// </summary>
-        new List<IOptionSpec> SubSpecs { get; }
+        /// <returns></returns>
+        object GetValue();
     }
 }

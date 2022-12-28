@@ -5,34 +5,15 @@ namespace BindOpen.Commands.Options
     /// <summary>
     /// 
     /// </summary>
-    public interface IOptionSet : ITDataItemSet<IOption>
+    public interface IOptionSet :
+        ITDataItemSet<IOption>, ITNamedPoco<IOptionSet>,
+        ITGloballyDescribedPoco<IOptionSet>
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="uiCulture"></param>
         /// <returns></returns>
-        IOptionSet AddOptions(params IOption[] options);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        IOption GetOption(string name);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        object GetOptionValue(string name);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        bool HasOption(string name);
+        string GetHelpText(string uiCulture = "*");
     }
 }

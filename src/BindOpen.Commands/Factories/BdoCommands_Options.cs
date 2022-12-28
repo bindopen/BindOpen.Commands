@@ -1,32 +1,35 @@
-﻿using BindOpen.Framework.MetaData;
+﻿using BindOpen.Commands.Options;
+using BindOpen.Framework.MetaData;
 using BindOpen.Framework.MetaData.Elements;
 using BindOpen.Framework.MetaData.Specification;
-using System;
 using System.Linq;
 
-namespace BindOpen.Commands.Options
+namespace BindOpen.Commands
 {
     /// <summary>
     /// This class represents a option factory.
     /// </summary>
-    public static class BdoOptions
+    public static partial class BdoCommands
     {
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
         /// </summary>
         /// <param name="aliases">Aliases of the option to add.</param>
-        public static OptionSpec CreateSpec(params string[] aliases)
-            => CreateSpec(OptionNameKind.OnlyName, aliases);
+        public static Option NewOption(
+            string name,
+            params string[] aliases)
+            => NewOption(OptionNameKind.OnlyName, name, aliases);
 
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
         /// </summary>
         /// <param name="nameKind">The name kind to consider.</param>
         /// <param name="aliases">Aliases of the option to add.</param>
-        public static OptionSpec CreateSpec(
+        public static Option NewOption(
             OptionNameKind nameKind,
+            string name,
             params string[] aliases)
-            => CreateSpec(DataValueTypes.Text, nameKind, aliases);
+            => NewOption(DataValueTypes.Text, nameKind, name, aliases);
 
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
@@ -34,24 +37,32 @@ namespace BindOpen.Commands.Options
         /// <param name="valueType">The value type to consider.</param>
         /// <param name="nameKind">The name kind to consider.</param>
         /// <param name="aliases">Aliases of the option to add.</param>
-        public static OptionSpec CreateSpec(
+        public static Option NewOption(
             DataValueTypes valueType,
             OptionNameKind nameKind,
+            string name,
             params string[] aliases)
-            => CreateSpec(valueType, RequirementLevels.Required, nameKind, aliases);
+            => NewOption(
+                valueType,
+                RequirementLevels.Optional,
+                nameKind,
+                name,
+                aliases);
 
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
         /// </summary>
         /// <param name="requirementLevel">The requirement level of the entry to add.</param>
         /// <param name="aliases">Aliases of the option to add.</param>
-        public static OptionSpec CreateSpec(
+        public static Option NewOption(
             RequirementLevels requirementLevel,
+            string name,
             params string[] aliases)
-            => CreateSpec(
+            => NewOption(
                 DataValueTypes.Text,
                 requirementLevel,
                 aliases.Any(p => p?.Contains(StringHelper.__PatternEmptyValue) == true) ? OptionNameKind.NameWithValue : OptionNameKind.OnlyName,
+                name,
                 aliases);
 
         /// <summary>
@@ -60,11 +71,17 @@ namespace BindOpen.Commands.Options
         /// <param name="requirementLevel">The requirement level of the entry to add.</param>
         /// <param name="nameKind">The name kind to consider.</param>
         /// <param name="aliases">Aliases of the option to add.</param>
-        public static OptionSpec CreateSpec(
+        public static Option NewOption(
             RequirementLevels requirementLevel,
             OptionNameKind nameKind,
+            string name,
             params string[] aliases)
-            => CreateSpec(DataValueTypes.Text, requirementLevel, nameKind, aliases);
+            => NewOption(
+                DataValueTypes.Text,
+                requirementLevel,
+                nameKind,
+                name,
+                aliases);
 
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
@@ -73,19 +90,22 @@ namespace BindOpen.Commands.Options
         /// <param name="requirementLevel">The requirement level of the entry to consider.</param>
         /// <param name="nameKind">The name kind to consider.</param>
         /// <param name="aliases">Aliases of the option to add.</param>
-        public static OptionSpec CreateSpec(
+        public static Option NewOption(
             DataValueTypes valueType,
             RequirementLevels requirementLevel,
             OptionNameKind nameKind,
+            string name,
             params string[] aliases)
         {
-            OptionSpec spec = BdoElementSpecs.Create<OptionSpec>();
+            Option spec = BdoElements.NewSpec<Option>();
 
-            spec.WithValueType(valueType);
-            spec.WithAliases(aliases ?? new string[1] { "{{*}}" });
-            spec.WithMinimumItemNumber(nameKind.HasValue() ? 1 : 0);
-            spec.WithMaximumItemNumber(nameKind.HasName() ? 0 : 1);
-            spec.WithRequirementLevel(requirementLevel);
+            spec
+                .WithAliases(aliases ?? new string[1] { "{{*}}" })
+                .WithMinimumItemNumber(nameKind.HasValue() ? 1 : 0)
+                .WithMaximumItemNumber(nameKind.HasName() ? 0 : 1)
+                .WithName(name)
+                .WithRequirementLevel(requirementLevel)
+                .WithValueType(valueType);
 
             return spec;
         }
@@ -97,15 +117,20 @@ namespace BindOpen.Commands.Options
         /// <param name="requirementLevel">The requirement level of the option to consider.</param>
         /// <param name="nameKind">The name kind to consider.</param>
         /// <param name="aliases">Aliases of the option to add.</param>
-        public static OptionSpec CreateSpec(
-            Type type,
+        public static Option NewOption<T>(
             RequirementLevels requirementLevel,
             OptionNameKind nameKind,
+            string name,
             params string[] aliases)
         {
-            var spec = CreateSpec(type.GetValueType(), requirementLevel, nameKind, aliases);
+            var spec = NewOption(
+                typeof(T).GetValueType(),
+                requirementLevel,
+                nameKind,
+                name,
+                aliases);
 
-            if (type?.IsEnum == true)
+            if (typeof(T)?.IsEnum == true)
             {
                 var statement = new DataConstraintStatement();
                 //statement.Add(

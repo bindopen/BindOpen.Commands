@@ -1,11 +1,13 @@
 ﻿using BindOpen.Framework.MetaData.Elements;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BindOpen.Commands.Options
 {
     /// <summary>
-    /// This class represents a option set.
+    /// This class represents an option specification.
     /// </summary>
-    public class Option : ScalarElement, IOption
+    public class Option : ScalarElementSpec, IOption
     {
         // -------------------------------------------------------------
         // CONSTRUCTORS
@@ -14,28 +16,24 @@ namespace BindOpen.Commands.Options
         #region Constructors
 
         /// <summary>
-        /// Instantiates a new instance of the Option class.
+        /// Instantiates a new instance of the OptionSpec class.
         /// </summary>
-        public Option() : base()
+        public Option()
         {
         }
 
         #endregion
 
-        // ------------------------------------------
-        // ACCESSORS
-        // ------------------------------------------
+        // -------------------------------------------------------------
+        // IOption Implementation
+        // -------------------------------------------------------------
 
-        #region Accessors
+        #region IOption
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        public object GetValue()
-        {
-            return GetItem();
-        }
+        public new List<IOption> SubSpecs => base.SubSpecs.Cast<IOption>().ToList();
 
         #endregion
     }

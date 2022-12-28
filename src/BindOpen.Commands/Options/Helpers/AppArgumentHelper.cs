@@ -10,29 +10,21 @@ namespace BindOpen.Commands.Options
     /// </summary>
     public static class AppArgumentHelper
     {
-        // ------------------------------------------
-        // ACCESSORS
-        // ------------------------------------------
-
-        #region Accessors
-
-        // Arguments --------------------------------
-
         /// <summary>
         /// Retrieves the arguments from the specified argument string values.
         /// </summary>
         /// <param name="arguments">The argument string values to consider.</param>
-        /// <param name="optionSpecificationSet">The option specification set to consider.</param>
+        /// <param name="optionSet">The option specification set to consider.</param>
         /// <param name="allowMissingItems">Indicates whether the items can be missing.</param>
         /// <param name="log">The log to consider.</param>
         /// <returns>Returns the log of argument building.</returns>
-        public static IOptionSet UpdateOptions(
+        public static IParameterSet ParseArguments(
             this string[] arguments,
-            IOptionSpecSet optionSpecificationSet,
+            IOptionSet optionSet = null,
             bool allowMissingItems = false,
             IBdoLog log = null)
         {
-            IOptionSet optionSet = new OptionSet();
+            IParameterSet parameterSet = new ParameterSet();
 
             int index = 0;
             if (arguments != null)
@@ -43,31 +35,32 @@ namespace BindOpen.Commands.Options
 
                     if (currentArgumentString != null)
                     {
-                        IOption option = null;
+                        IParameter option = null;
 
-                        OptionSpec argumentSpecification = null;
+                        Option argumentSpecification = null;
 
                         int aliasIndex = -2;
-                        if (optionSpecificationSet != null)
+                        if (optionSet != null)
                         {
-                            argumentSpecification = optionSpecificationSet.Items
+                            argumentSpecification = optionSet.Items
                                .Find(p => p.IsArgumentMarching(currentArgumentString, out aliasIndex))
-                               as OptionSpec;
+                               as Option;
                         }
 
-                        if (optionSpecificationSet == null || argumentSpecification == null && allowMissingItems)
+                        if (optionSet == null || argumentSpecification == null && allowMissingItems)
                         {
-                            option = BdoElements.CreateScalar<Option>(currentArgumentString, DataValueTypes.Text);
+                            option = BdoElements.NewScalar<Parameter>(currentArgumentString, DataValueTypes.Text);
                             option.WithItem(arguments.GetAt(index));
-                            optionSet.Add(option);
+                            parameterSet.Add(option);
                         }
-                        else if (argumentSpecification != null && optionSpecificationSet != null)
+                        else if (argumentSpecification != null && optionSet != null)
                         {
                             if (argumentSpecification.ValueType == DataValueTypes.Any)
                             {
                                 argumentSpecification.WithValueType(DataValueTypes.Text);
                             }
-                            option = BdoElements.CreateScalar<Option>(argumentSpecification.Name, null, argumentSpecification.ValueType, argumentSpecification);
+                            option = BdoElements.NewScalar<Parameter>(
+                                argumentSpecification.Name, argumentSpecification.ValueType, argumentSpecification);
 
                             option.WithSpecifications(argumentSpecification);
                             if (argumentSpecification.ItemRequirementLevel.IsPossible())
@@ -92,16 +85,16 @@ namespace BindOpen.Commands.Options
                                 }
                             }
 
-                            optionSet.Add(option);
+                            parameterSet.Add(option);
                         }
                     }
                     index++;
                 }
             }
 
-            optionSet.Check(optionSpecificationSet, log: log);
+            parameterSet.Check(optionSet, log: log);
 
-            return optionSet;
+            return parameterSet;
         }
 
         /// <summary>
@@ -113,8 +106,8 @@ namespace BindOpen.Commands.Options
         /// <param name="log">The log to consider.</param>
         /// <returns>Returns the log of check.</returns>
         public static bool Check(
-            this IOptionSet optionSet,
-            IOptionSpecSet optionSpecificationSet,
+            this IParameterSet optionSet,
+            IOptionSet optionSpecificationSet,
             bool allowMissingItems = false,
             IBdoLog log = null)
         {
@@ -164,7 +157,5 @@ namespace BindOpen.Commands.Options
 
             return isValid;
         }
-
-        #endregion
     }
 }
