@@ -1,5 +1,6 @@
-﻿using BindOpen.Framework.MetaData;
-using BindOpen.Framework.MetaData.Items;
+﻿using BindOpen.Data;
+using BindOpen.Data.Items;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BindOpen.Commands.Options
@@ -7,7 +8,7 @@ namespace BindOpen.Commands.Options
     /// <summary>
     /// This class represents a option specification set.
     /// </summary>
-    public class OptionSet : TDataItemSet<IOption>, IOptionSet
+    public class OptionSet : TBdoItemSet<IOption>, IOptionSet
     {
         // -------------------------------------------------------------
         // CONSTRUCTORS
@@ -37,13 +38,13 @@ namespace BindOpen.Commands.Options
         /// <returns>Returns the help text.</returns>
         public string GetHelpText(string uiCulture = "*")
         {
-            string helpText = Description.GetText(uiCulture);
+            string helpText = Description?[uiCulture];
 
             foreach (var aElementSpec in Items)
             {
                 foreach (string aAlias in aElementSpec.Aliases)
                     helpText += (helpText?.Length == 0 ? string.Empty : ", ") + aAlias;
-                helpText += ": " + aElementSpec.Description.GetText(uiCulture) + "\r\n";
+                helpText += ": " + aElementSpec.Description?[uiCulture] + "\r\n";
             }
 
             return helpText;
@@ -52,10 +53,10 @@ namespace BindOpen.Commands.Options
         #endregion
 
         // -------------------------------------------------------------
-        // ITDataItemSet Implementation
+        // ITBdoItemSet Implementation
         // -------------------------------------------------------------
 
-        #region ITDataItemSet        
+        #region ITBdoItemSet        
 
         /// <summary>
         /// Returns the item with the specified name.
@@ -67,7 +68,7 @@ namespace BindOpen.Commands.Options
             if (key == null) return this[0];
 
             return Items.Find(p =>
-                p.KeyEquals(key) || p?.Aliases?.Any(q => q.KeyEquals(key)) == true);
+                p.BdoKeyEquals(key) || p?.Aliases?.Any(q => q.BdoKeyEquals(key)) == true);
         }
 
         #endregion
@@ -106,16 +107,16 @@ namespace BindOpen.Commands.Options
         /// <summary>
         /// 
         /// </summary>
-        public IDictionaryDataItem Description { get; set; }
+        public IBdoDictionary Description { get; set; }
 
-        public IOptionSet AddDescription(IDataKeyValue item)
+        public IOptionSet AddDescription(KeyValuePair<string, string> item)
         {
             Description ??= BdoItems.NewDictionary();
             Description.Add(item);
             return this;
         }
 
-        public IOptionSet WithDescription(IDictionaryDataItem dictionary)
+        public IOptionSet WithDescription(IBdoDictionary dictionary)
         {
             Description = dictionary;
             return this;
@@ -123,13 +124,7 @@ namespace BindOpen.Commands.Options
 
         public string GetDescriptionText(string key = "*", string defaultKey = "*")
         {
-            string label = Description?.GetText(key);
-            if (string.IsNullOrEmpty(label))
-            {
-                label = Description?.GetText(defaultKey);
-            }
-
-            return label;
+            return Description?[key, defaultKey];
         }
 
         #endregion

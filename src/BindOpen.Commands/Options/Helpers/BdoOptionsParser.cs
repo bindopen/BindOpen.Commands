@@ -1,4 +1,4 @@
-﻿using BindOpen.Framework.MetaData;
+﻿using BindOpen.Data;
 
 namespace BindOpen.Commands.Options
 {
@@ -64,7 +64,7 @@ namespace BindOpen.Commands.Options
                 name1 = name1.ToSubstring(0, i - 1);
                 name2 = name2.ToSubstring(0, i - 1);
             }
-            return name1.KeyEquals(name2);
+            return name1.BdoKeyEquals(name2);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using BindOpen.Commands.Options;
-using BindOpen.Framework.MetaData;
-using BindOpen.Framework.MetaData.Elements;
-using BindOpen.Framework.MetaData.Specification;
+using BindOpen.Data;
+using BindOpen.Data.Elements;
+using BindOpen.Data.Specification;
 using System.Linq;
 
 namespace BindOpen.Commands
