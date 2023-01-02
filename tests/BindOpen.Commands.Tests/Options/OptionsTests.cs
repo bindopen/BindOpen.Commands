@@ -25,8 +25,8 @@ namespace BindOpen.Tests.Logging
         public void CreateOptionsTest()
         {
             var options = BdoCommands.NewOptionSet(
-                BdoCommands.NewOption("--version", "-v"),
-                BdoCommands.NewOption("--help", "-h"));
+                BdoCommands.NewOption("version", "--version", "-v"),
+                BdoCommands.NewOption("help", "--help", "-h"));
 
             var args = new[] { "--version", "-h" };
 

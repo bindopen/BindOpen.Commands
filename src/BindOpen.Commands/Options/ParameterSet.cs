@@ -1,11 +1,11 @@
-﻿using BindOpen.Framework.MetaData.Items;
+﻿using BindOpen.Data.Items;
 
 namespace BindOpen.Commands.Options
 {
     /// <summary>
     /// This class represents a option set.
     /// </summary>
-    public class ParameterSet : TDataItemSet<IParameter>, IParameterSet
+    public class ParameterSet : TBdoItemSet<IParameter>, IParameterSet
     {
         // -------------------------------------------------------------
         // CONSTRUCTORS
