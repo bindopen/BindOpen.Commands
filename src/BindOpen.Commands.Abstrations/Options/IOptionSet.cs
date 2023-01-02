@@ -1,4 +1,4 @@
-﻿using BindOpen.Framework.MetaData.Items;
+﻿using BindOpen.Data.Items;
 
 namespace BindOpen.Commands.Options
 {
@@ -6,7 +6,7 @@ namespace BindOpen.Commands.Options
     /// 
     /// </summary>
     public interface IOptionSet :
-        ITDataItemSet<IOption>, ITNamedPoco<IOptionSet>,
+        ITBdoItemSet<IOption>, ITNamedPoco<IOptionSet>,
         ITGloballyDescribedPoco<IOptionSet>
     {
         /// <summary>

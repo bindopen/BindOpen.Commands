@@ -1,11 +1,11 @@
-﻿using BindOpen.Framework.MetaData.Items;
+﻿using BindOpen.Data.Items;
 
 namespace BindOpen.Commands.Options
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface IParameterSet : ITDataItemSet<IParameter>
+    public interface IParameterSet : ITBdoItemSet<IParameter>
     {
         /// <summary>
         /// 
