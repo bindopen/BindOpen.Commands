@@ -1,6 +1,5 @@
-﻿using BindOpen.Data;
-using BindOpen.Data.Elements;
-using BindOpen.Logging;
+﻿using BindOpen.Logging;
+using BindOpen.MetaData;
 using System.Linq;
 
 namespace BindOpen.Commands.Options
@@ -49,7 +48,7 @@ namespace BindOpen.Commands.Options
 
                         if (optionSet == null || argumentSpecification == null && allowMissingItems)
                         {
-                            option = BdoElements.NewScalar<Parameter>(currentArgumentString, DataValueTypes.Text);
+                            option = BdoMeta.NewScalar<Parameter>(currentArgumentString, DataValueTypes.Text);
                             option.WithItem(arguments.GetAt(index));
                             parameterSet.Add(option);
                         }
@@ -59,7 +58,7 @@ namespace BindOpen.Commands.Options
                             {
                                 argumentSpecification.WithValueType(DataValueTypes.Text);
                             }
-                            option = BdoElements.NewScalar<Parameter>(
+                            option = BdoMeta.NewScalar<Parameter>(
                                 argumentSpecification.Name, argumentSpecification.ValueType, argumentSpecification);
 
                             option.WithSpecifications(argumentSpecification);

@@ -1,4 +1,4 @@
-﻿using BindOpen.Data.Elements;
+﻿using BindOpen.MetaData.Elements;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,7 +7,7 @@ namespace BindOpen.Commands.Options
     /// <summary>
     /// This class represents an option specification.
     /// </summary>
-    public class Option : ScalarElementSpec, IOption
+    public class Option : BdoMetaScalarSpec, IOption
     {
         // -------------------------------------------------------------
         // CONSTRUCTORS

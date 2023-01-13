@@ -1,11 +1,11 @@
-﻿using BindOpen.Data.Elements;
+﻿using BindOpen.MetaData.Elements;
 
 namespace BindOpen.Commands.Options
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface IParameter : IScalarElement
+    public interface IParameter : IBdoMetaScalar
     {
         /// <summary>
         /// 
