@@ -1,7 +1,6 @@
 ﻿using BindOpen.Commands.Options;
-using BindOpen.Data;
-using BindOpen.Data.Elements;
-using BindOpen.Data.Specification;
+using BindOpen.MetaData;
+using BindOpen.MetaData.Specification;
 using System.Linq;
 
 namespace BindOpen.Commands
@@ -97,7 +96,7 @@ namespace BindOpen.Commands
             string name,
             params string[] aliases)
         {
-            Option spec = BdoElements.NewSpec<Option>();
+            var spec = BdoMeta.NewSpec<Option>();
 
             spec
                 .WithAliases(aliases ?? new string[1] { "{{*}}" })
@@ -135,8 +134,8 @@ namespace BindOpen.Commands
                 var statement = new DataConstraintStatement();
                 //statement.Add(
                 //    "standard$" + KnownRoutineKinds.ItemMustBeInList,
-                //    BdoElements.CreateSet(
-                //        BdoElements.CreateScalar(DataValueTypes.Text, type.GetEnumFields())));
+                //    BdoMeta.CreateSet(
+                //        BdoMeta.CreateScalar(DataValueTypes.Text, type.GetEnumFields())));
                 spec.WithConstraintStatement(statement);
             }
 

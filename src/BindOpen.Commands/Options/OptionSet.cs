@@ -1,5 +1,5 @@
-﻿using BindOpen.Data;
-using BindOpen.Data.Items;
+﻿using BindOpen.MetaData;
+using BindOpen.MetaData.Items;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -111,7 +111,7 @@ namespace BindOpen.Commands.Options
 
         public IOptionSet AddDescription(KeyValuePair<string, string> item)
         {
-            Description ??= BdoItems.NewDictionary();
+            Description ??= BdoMeta.NewDictionary();
             Description.Add(item);
             return this;
         }

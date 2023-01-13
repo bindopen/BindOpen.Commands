@@ -1,4 +1,4 @@
-﻿using BindOpen.Data.Elements;
+﻿using BindOpen.MetaData.Elements;
 using System.Collections.Generic;
 
 namespace BindOpen.Commands.Options
@@ -6,7 +6,7 @@ namespace BindOpen.Commands.Options
     /// <summary>
     /// 
     /// </summary>
-    public interface IOption : IScalarElementSpec
+    public interface IOption : IBdoMetaScalarSpec
     {
         /// <summary>
         /// 

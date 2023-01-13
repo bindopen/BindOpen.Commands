@@ -6,7 +6,7 @@
     <PackageId>BindOpen.Commands.Tests</PackageId>
     <Product>BindOpen.Commands</Product>
     <Company>BindOpen</Company>
-    <Copyright>Copyright ©BindOpen 2011-2022</Copyright>
+    <Copyright>Copyright ©BindOpen 2011-2023</Copyright>
     <Description>This package deal with command line of BindOpen framework.</Description>
     <Authors>Sumer Team</Authors>
     <RootNamespace>BindOpen.Commands.Tests</RootNamespace>
