@@ -15,7 +15,7 @@ namespace BindOpen.Commands
             params IOption[] options)
         {
             var set = new OptionSet();
-            set.WithItems(options);
+            set.With(options);
             return set;
         }
     }

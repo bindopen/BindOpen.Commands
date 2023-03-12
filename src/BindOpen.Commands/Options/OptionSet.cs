@@ -1,5 +1,5 @@
 ﻿using BindOpen.Data;
-using BindOpen.Data.Items;
+using BindOpen.Data.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +8,7 @@ namespace BindOpen.Commands.Options
     /// <summary>
     /// This class represents a option specification set.
     /// </summary>
-    public class OptionSet : TBdoItemSet<IOption>, IOptionSet
+    public class OptionSet : TBdoSet<IOption>, IOptionSet
     {
         // -------------------------------------------------------------
         // CONSTRUCTORS
@@ -53,22 +53,31 @@ namespace BindOpen.Commands.Options
         #endregion
 
         // -------------------------------------------------------------
-        // ITBdoItemSet Implementation
+        // ITBdoSet Implementation
         // -------------------------------------------------------------
 
-        #region ITBdoItemSet        
+        #region ITBdoSet        
 
         /// <summary>
         /// Returns the item with the specified name.
         /// </summary>
         /// <param name="key">The name of the alias of the item to return.</param>
         /// <returns>Returns the item with the specified name.</returns>
-        public new IOption Get(string key = null)
+        public override IOption Get(string name = null, string alternateKey = null)
         {
-            if (key == null) return this[0];
+            if (Items == null)
+                return default;
 
-            return Items.Find(p =>
-                p.BdoKeyEquals(key) || p?.Aliases?.Any(q => q.BdoKeyEquals(key)) == true);
+            if (name == null && alternateKey == null)
+                return Items.FirstOrDefault();
+
+            var item = Items.Find(p =>
+                p.BdoKeyEquals(name) || p?.Aliases?.Any(q => q.BdoKeyEquals(name)) == true);
+
+            item ??= Items.Find(p =>
+                    p.BdoKeyEquals(alternateKey) || p?.Aliases?.Any(q => q.BdoKeyEquals(alternateKey)) == true);
+
+            return item;
         }
 
         #endregion
@@ -99,10 +108,10 @@ namespace BindOpen.Commands.Options
         #endregion
 
         // ------------------------------------------
-        // IGloballyDescribed Implementation
+        // IBdoDescribed Implementation
         // ------------------------------------------
 
-        #region IGloballyDescribed
+        #region IBdoDescribed
 
         /// <summary>
         /// 
@@ -111,7 +120,7 @@ namespace BindOpen.Commands.Options
 
         public IOptionSet AddDescription(KeyValuePair<string, string> item)
         {
-            Description ??= BdoItems.NewDictionary();
+            Description ??= BdoData.NewDictionary();
             Description.Add(item);
             return this;
         }

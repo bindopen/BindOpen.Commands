@@ -1,16 +1,11 @@
-﻿using BindOpen.Data.Elements;
+﻿using BindOpen.Data.Meta;
 
 namespace BindOpen.Commands.Options
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface IParameter : IScalarElement
+    public interface IParameter : IBdoMetaScalar
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        object GetValue();
     }
 }
