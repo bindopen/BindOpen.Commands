@@ -1,4 +1,4 @@
-﻿using BindOpen.MetaData;
+﻿using BindOpen.Data.Helpers;
 
 namespace BindOpen.Commands.Options
 {

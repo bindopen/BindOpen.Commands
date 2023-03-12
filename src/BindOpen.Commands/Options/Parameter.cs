@@ -1,4 +1,4 @@
-﻿using BindOpen.MetaData.Elements;
+﻿using BindOpen.Data.Meta;
 
 namespace BindOpen.Commands.Options
 {
@@ -18,23 +18,6 @@ namespace BindOpen.Commands.Options
         /// </summary>
         public Parameter() : base()
         {
-        }
-
-        #endregion
-
-        // ------------------------------------------
-        // ACCESSORS
-        // ------------------------------------------
-
-        #region Accessors
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public object GetValue()
-        {
-            return GetItem();
         }
 
         #endregion

@@ -1,4 +1,4 @@
-﻿using BindOpen.MetaData.Elements;
+﻿using BindOpen.Data.Meta;
 
 namespace BindOpen.Commands.Options
 {
@@ -7,10 +7,5 @@ namespace BindOpen.Commands.Options
     /// </summary>
     public interface IParameter : IBdoMetaScalar
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        object GetValue();
     }
 }

@@ -1,5 +1,7 @@
-﻿using BindOpen.Logging;
-using BindOpen.MetaData;
+﻿using BindOpen.Data;
+using BindOpen.Data.Helpers;
+using BindOpen.Data.Meta;
+using BindOpen.Logging;
 using System.Linq;
 
 namespace BindOpen.Commands.Options
@@ -36,51 +38,51 @@ namespace BindOpen.Commands.Options
                     {
                         IParameter option = null;
 
-                        Option argumentSpecification = null;
+                        Option argumentSpec = null;
 
                         int aliasIndex = -2;
                         if (optionSet != null)
                         {
-                            argumentSpecification = optionSet.Items
-                               .Find(p => p.IsArgumentMarching(currentArgumentString, out aliasIndex))
+                            argumentSpec = optionSet
+                               .FirstOrDefault(p => p.IsArgumentMarching(currentArgumentString, out aliasIndex))
                                as Option;
                         }
 
-                        if (optionSet == null || argumentSpecification == null && allowMissingItems)
+                        if (optionSet == null || argumentSpec == null && allowMissingItems)
                         {
-                            option = BdoMeta.NewScalar<Parameter>(currentArgumentString, DataValueTypes.Text);
-                            option.WithItem(arguments.GetAt(index));
+                            option = BdoMeta.NewScalar<object, Parameter>(currentArgumentString, DataValueTypes.Text);
+                            option.WithData(arguments.GetAt(index));
                             parameterSet.Add(option);
                         }
-                        else if (argumentSpecification != null && optionSet != null)
+                        else if (argumentSpec != null && optionSet != null)
                         {
-                            if (argumentSpecification.ValueType == DataValueTypes.Any)
+                            if (argumentSpec.ValueType == DataValueTypes.Any)
                             {
-                                argumentSpecification.WithValueType(DataValueTypes.Text);
+                                argumentSpec.WithDataValueType(DataValueTypes.Text);
                             }
-                            option = BdoMeta.NewScalar<Parameter>(
-                                argumentSpecification.Name, argumentSpecification.ValueType, argumentSpecification);
+                            option = BdoMeta.NewScalar<object, Parameter>(
+                                argumentSpec.Name, argumentSpec.ValueType, argumentSpec);
 
-                            option.WithSpecifications(argumentSpecification);
-                            if (argumentSpecification.ItemRequirementLevel.IsPossible())
+                            option.WithSpecs(argumentSpec);
+                            if (argumentSpec.DataRequirementLevel.IsPossible())
                             {
-                                if (argumentSpecification.Name.Contains(StringHelper.__PatternEmptyValue))
+                                if (argumentSpec.Name.Contains(StringHelper.__PatternEmptyValue))
                                 {
-                                    option.WithName(argumentSpecification.Name.ToSubstring(0, argumentSpecification.Name.Length - StringHelper.__PatternEmptyValue.Length - 2));
+                                    option.WithName(argumentSpec.Name.ToSubstring(0, argumentSpec.Name.Length - StringHelper.__PatternEmptyValue.Length - 2));
 
                                     int valueIndex = -1;
                                     if (aliasIndex == -1)
-                                        valueIndex = argumentSpecification.Name.IndexOf(StringHelper.__PatternEmptyValue);
+                                        valueIndex = argumentSpec.Name.IndexOf(StringHelper.__PatternEmptyValue);
                                     else if (aliasIndex > -1)
-                                        valueIndex = argumentSpecification.Aliases[aliasIndex].IndexOf(StringHelper.__PatternEmptyValue);
+                                        valueIndex = argumentSpec.Aliases[aliasIndex].IndexOf(StringHelper.__PatternEmptyValue);
 
-                                    option.WithItem(valueIndex < 0 ? string.Empty : currentArgumentString.ToSubstring(valueIndex));
+                                    option.WithData(valueIndex < 0 ? string.Empty : currentArgumentString.ToSubstring(valueIndex));
                                 }
                                 else
                                 {
                                     index++;
                                     if (index < arguments.Length)
-                                        option.WithItem(arguments.GetAt(index));
+                                        option.WithData(arguments.GetAt(index));
                                 }
                             }
 
@@ -100,25 +102,25 @@ namespace BindOpen.Commands.Options
         /// Checks this instance.
         /// </summary>
         /// <param name="optionSet">The set of options to consider.</param>
-        /// <param name="optionSpecificationSet">The set of option specifications to consider.</param>
+        /// <param name="optionSpecSet">The set of option specifications to consider.</param>
         /// <param name="allowMissingItems">Indicates whether the items can be missing.</param>
         /// <param name="log">The log to consider.</param>
         /// <returns>Returns the log of check.</returns>
         public static bool Check(
             this IParameterSet optionSet,
-            IOptionSet optionSpecificationSet,
+            IOptionSet optionSpecSet,
             bool allowMissingItems = false,
             IBdoLog log = null)
         {
             bool isValid = false;
 
-            if (optionSet?.Items != null && optionSpecificationSet != null)
+            if (optionSet != null && optionSpecSet != null)
             {
                 if (!allowMissingItems)
                 {
-                    foreach (var optionSpecification in optionSpecificationSet.Items.Where(p => p.RequirementLevel == RequirementLevels.Required))
+                    foreach (var optionSpecification in optionSpecSet.Items.Where(p => p.RequirementLevel == RequirementLevels.Required))
                     {
-                        if (!optionSet.HasItem(optionSpecification.Name))
+                        if (!optionSet.Has(optionSpecification.Name))
                         {
                             isValid = false;
                             log.AddError("Option '" + optionSpecification.Name + "' missing");
@@ -126,14 +128,14 @@ namespace BindOpen.Commands.Options
                     }
                 }
 
-                foreach (var option in optionSet.Items)
+                foreach (var option in optionSet)
                 {
-                    var spec = option?.GetSpecification();
+                    var spec = option?.Specs?.Get();
                     if (spec != null)
                     {
-                        var value = option.GetItem<string>();
+                        var value = option.GetData<string>();
 
-                        switch (spec.ItemRequirementLevel)
+                        switch (spec.DataRequirementLevel)
                         {
                             case RequirementLevels.Required:
                                 if (string.IsNullOrEmpty(value))

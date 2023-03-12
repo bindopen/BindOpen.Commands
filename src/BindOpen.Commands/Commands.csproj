@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>BindOpen.Commands</AssemblyName>
     <PackageId>BindOpen.Commands</PackageId>
     <Product>BindOpen.Commands</Product>
@@ -38,9 +38,9 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="BindOpen.MetaData" Version="1.2.3" />
+    <PackageReference Include="BindOpen.Data" Version="1.2.10" />
   </ItemGroup>
 
   <ItemGroup>
