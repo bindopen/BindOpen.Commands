@@ -1,11 +1,11 @@
-﻿using BindOpen.Data.Elements;
+﻿using BindOpen.Data.Meta;
 
 namespace BindOpen.Commands.Options
 {
     /// <summary>
     /// This class represents a option set.
     /// </summary>
-    public class Parameter : ScalarElement, IParameter
+    public class Parameter : BdoMetaScalar, IParameter
     {
         // -------------------------------------------------------------
         // CONSTRUCTORS
@@ -18,23 +18,6 @@ namespace BindOpen.Commands.Options
         /// </summary>
         public Parameter() : base()
         {
-        }
-
-        #endregion
-
-        // ------------------------------------------
-        // ACCESSORS
-        // ------------------------------------------
-
-        #region Accessors
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public object GetValue()
-        {
-            return GetItem();
         }
 
         #endregion
