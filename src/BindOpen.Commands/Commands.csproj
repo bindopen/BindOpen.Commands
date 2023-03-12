@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>BindOpen.Commands</AssemblyName>
     <PackageId>BindOpen.Commands</PackageId>
     <Product>BindOpen.Commands</Product>
     <Company>BindOpen</Company>
-    <Copyright>Copyright ©BindOpen 2011-2022</Copyright>
+    <Copyright>Copyright ©BindOpen 2011-2023</Copyright>
     <Description>This package deal with command line of BindOpen framework.</Description>
     <Authors>Sumer Team</Authors>
     <RootNamespace>BindOpen.Commands</RootNamespace>
@@ -15,7 +15,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>bindopen_icon.png</PackageIcon>
-    <PackageIconUrl>https://www.BindOpen.Framework.org/images/favicon_bdo.png</PackageIconUrl>
+    <PackageIconUrl>https://storage.bindopen.org/org/icons/bindopen_icon_64x64.png</PackageIconUrl>
     <SignAssembly>true</SignAssembly>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
@@ -38,9 +38,9 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="BindOpen.Data" Version="1.1.51" />
+    <PackageReference Include="BindOpen.Data" Version="1.2.10" />
   </ItemGroup>
 
   <ItemGroup>

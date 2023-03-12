@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>BindOpen.Commands.Tests</AssemblyName>
     <PackageId>BindOpen.Commands.Tests</PackageId>
     <Product>BindOpen.Commands</Product>
     <Company>BindOpen</Company>
-    <Copyright>Copyright ©BindOpen 2011-2022</Copyright>
+    <Copyright>Copyright ©BindOpen 2011-2023</Copyright>
     <Description>This package deal with command line of BindOpen framework.</Description>
     <Authors>Sumer Team</Authors>
     <RootNamespace>BindOpen.Commands.Tests</RootNamespace>
@@ -40,9 +40,9 @@
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="34.0.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.3.1">
+    <PackageReference Include="NUnit3TestAdapter" Version="4.4.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
