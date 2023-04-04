@@ -32,8 +32,8 @@ namespace BindOpen.Commands
 
             spec
                 .WithAliases(aliases ?? new string[1] { "{{*}}" })
-                .WithMinimumItemNumber((uint)(nameKind.HasValue() ? 1 : 0))
-                .WithMaximumItemNumber((uint)(nameKind.HasName() ? 0 : 1))
+                .WithMinDataItemNumber((uint)(nameKind.HasValue() ? 1 : 0))
+                .WithMaxDataItemNumber((uint)(nameKind.HasName() ? 0 : 1))
                 .WithName(name);
 
             return spec;
