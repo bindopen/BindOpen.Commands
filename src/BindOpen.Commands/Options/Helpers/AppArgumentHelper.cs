@@ -64,7 +64,7 @@ namespace BindOpen.Commands.Options
                                 argumentSpec.Name, argumentSpec.ValueType, argumentSpec);
 
                             option.WithSpecs(argumentSpec);
-                            if (argumentSpec.DataRequirementLevel.IsPossible())
+                            if (argumentSpec.DataRequirement.IsPossible())
                             {
                                 if (argumentSpec.Name.Contains(StringHelper.__PatternEmptyValue))
                                 {
@@ -118,7 +118,7 @@ namespace BindOpen.Commands.Options
             {
                 if (!allowMissingItems)
                 {
-                    foreach (var optionSpecification in optionSpecSet.Items.Where(p => p.RequirementLevel == RequirementLevels.Required))
+                    foreach (var optionSpecification in optionSpecSet.Items.Where(p => p.Requirement == RequirementLevels.Required))
                     {
                         if (!optionSet.Has(optionSpecification.Name))
                         {
@@ -135,7 +135,7 @@ namespace BindOpen.Commands.Options
                     {
                         var value = option.GetData<string>();
 
-                        switch (spec.DataRequirementLevel)
+                        switch (spec.DataRequirement)
                         {
                             case RequirementLevels.Required:
                                 if (string.IsNullOrEmpty(value))

@@ -63,21 +63,13 @@ namespace BindOpen.Commands.Options
         /// </summary>
         /// <param name="key">The name of the alias of the item to return.</param>
         /// <returns>Returns the item with the specified name.</returns>
-        public override IOption Get(string name = null, string alternateKey = null)
+        public override IOption Get(string key)
         {
             if (Items == null)
                 return default;
 
-            if (name == null && alternateKey == null)
-                return Items.FirstOrDefault();
-
-            var item = Items.Find(p =>
-                p.BdoKeyEquals(name) || p?.Aliases?.Any(q => q.BdoKeyEquals(name)) == true);
-
-            item ??= Items.Find(p =>
-                    p.BdoKeyEquals(alternateKey) || p?.Aliases?.Any(q => q.BdoKeyEquals(alternateKey)) == true);
-
-            return item;
+            return Items.Find(p =>
+                    p.BdoKeyEquals(key) || p?.Aliases?.Any(q => q.BdoKeyEquals(key)) == true);
         }
 
         #endregion
