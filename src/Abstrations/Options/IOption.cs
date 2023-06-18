@@ -1,7 +1,7 @@
-﻿using BindOpen.Data.Meta;
+﻿using BindOpen.System.Data.Meta;
 using System.Collections.Generic;
 
-namespace BindOpen.Commands.Options
+namespace BindOpen.Labs.Commands
 {
     /// <summary>
     /// 

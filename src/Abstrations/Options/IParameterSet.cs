@@ -1,6 +1,6 @@
-﻿using BindOpen.Data;
+﻿using BindOpen.System.Data;
 
-namespace BindOpen.Commands.Options
+namespace BindOpen.Labs.Commands
 {
     /// <summary>
     /// 

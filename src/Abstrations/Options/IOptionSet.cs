@@ -1,6 +1,7 @@
-﻿using BindOpen.Data;
+﻿using BindOpen.System.Data;
+using BindOpen.System.Data.Helpers;
 
-namespace BindOpen.Commands.Options
+namespace BindOpen.Labs.Commands
 {
     /// <summary>
     /// 
@@ -14,6 +15,6 @@ namespace BindOpen.Commands.Options
         /// </summary>
         /// <param name="uiCulture"></param>
         /// <returns></returns>
-        string GetHelpText(string uiCulture = "*");
+        string GetHelpText(string uiCulture = StringHelper.__Star);
     }
 }

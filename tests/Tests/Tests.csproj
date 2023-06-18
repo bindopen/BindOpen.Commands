@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <AssemblyName>BindOpen.Commands.Tests</AssemblyName>
-    <PackageId>BindOpen.Commands.Tests</PackageId>
-    <Product>BindOpen.Commands</Product>
+    <AssemblyName>BindOpen.Labs.Commands.Tests</AssemblyName>
+    <PackageId>BindOpen.Labs.Commands.Tests</PackageId>
+    <Product>BindOpen.Labs.Commands</Product>
     <Company>BindOpen</Company>
     <Copyright>Copyright ©BindOpen 2011-2023</Copyright>
     <Description>This package deal with command line of BindOpen framework.</Description>
     <Authors>Sumer Team</Authors>
-    <RootNamespace>BindOpen.Commands.Tests</RootNamespace>
+    <RootNamespace>BindOpen.Labs.Commands.Tests</RootNamespace>
     <PackageProjectUrl>https://github.com/bindopen</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/bindopen/BindOpen.Commands.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/bindopen/BindOpen.Labs.Commands.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>bindopen_icon.png</PackageIcon>
@@ -40,20 +40,16 @@
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="34.0.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.2" />
     <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.4.2">
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\BindOpen.Commands\Commands.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="_Global\Fakers\" />
+    <ProjectReference Include="..\..\src\Commands\Commands.csproj" />
   </ItemGroup>
 
 </Project>
