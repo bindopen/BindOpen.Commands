@@ -71,7 +71,7 @@ namespace BindOpen.Labs.Commands
 
                         if (optionSet == null || option == null && allowMissingItems)
                         {
-                            param = BdoMeta.NewScalar<object, Parameter>(argSt, DataValueTypes.Text);
+                            param = BdoData.NewMetaScalar<object, Parameter>(argSt, DataValueTypes.Text);
                             param.WithData(arguments.GetAt(index));
                             paramSet.Add(param);
                         }
@@ -81,7 +81,7 @@ namespace BindOpen.Labs.Commands
                             {
                                 option.WithDataType(DataValueTypes.Text);
                             }
-                            param = BdoMeta.NewScalar<object, Parameter>(
+                            param = BdoData.NewMetaScalar<object, Parameter>(
                                 option.Name, option.DataValueType, option);
 
                             param.WithSpecs(option);

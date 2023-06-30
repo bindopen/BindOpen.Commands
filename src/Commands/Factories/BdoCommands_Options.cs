@@ -28,7 +28,7 @@ namespace BindOpen.Labs.Commands
             string name = null,
             params string[] aliases)
         {
-            var spec = BdoMeta.NewSpec<Option>();
+            var spec = BdoData.NewSpec<Option>();
 
             spec
                 .WithLabel(format)
@@ -61,7 +61,7 @@ namespace BindOpen.Labs.Commands
             string name = null,
             params string[] aliases)
         {
-            var spec = BdoMeta.NewSpec<Option>();
+            var spec = BdoData.NewSpec<Option>();
 
             spec
                 .WithCondition(condition)
