@@ -1,8 +1,8 @@
-﻿using BindOpen.Data.Meta;
+﻿using BindOpen.System.Data.Meta;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BindOpen.Commands.Options
+namespace BindOpen.Labs.Commands
 {
     /// <summary>
     /// This class represents an option specification.

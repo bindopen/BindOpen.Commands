@@ -1,11 +1,11 @@
-﻿using BindOpen.Data.Meta;
+﻿using BindOpen.System.Data;
 
-namespace BindOpen.Commands.Options
+namespace BindOpen.Labs.Commands
 {
     /// <summary>
     /// This class represents a option set.
     /// </summary>
-    public class Parameter : BdoMetaScalar, IParameter
+    public class ParameterSet : TBdoSet<IParameter>, IParameterSet
     {
         // -------------------------------------------------------------
         // CONSTRUCTORS
@@ -14,9 +14,9 @@ namespace BindOpen.Commands.Options
         #region Constructors
 
         /// <summary>
-        /// Instantiates a new instance of the Option class.
+        /// Instantiates a new instance of the OptionSet class.
         /// </summary>
-        public Parameter() : base()
+        public ParameterSet() : base()
         {
         }
 
