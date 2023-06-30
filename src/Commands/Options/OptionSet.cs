@@ -1,9 +1,9 @@
-﻿using BindOpen.Data;
-using BindOpen.Data.Helpers;
+﻿using BindOpen.System.Data;
+using BindOpen.System.Data.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BindOpen.Commands.Options
+namespace BindOpen.Labs.Commands
 {
     /// <summary>
     /// This class represents a option specification set.
@@ -68,7 +68,7 @@ namespace BindOpen.Commands.Options
             if (Items == null)
                 return default;
 
-            return Items.Find(p =>
+            return Items.FirstOrDefault(p =>
                     p.BdoKeyEquals(key) || p?.Aliases?.Any(q => q.BdoKeyEquals(key)) == true);
         }
 

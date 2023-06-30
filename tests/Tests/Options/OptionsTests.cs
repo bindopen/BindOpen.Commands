@@ -1,8 +1,6 @@
-﻿using BindOpen.Commands;
-using BindOpen.Commands.Options;
-using BindOpen.Data;
-using BindOpen.Data.Meta;
-using BindOpen.Logging;
+﻿using BindOpen.Labs.Commands;
+using BindOpen.System.Data;
+using BindOpen.System.Data.Meta;
 using NUnit.Framework;
 
 namespace BindOpen.Tests.Commands
@@ -10,17 +8,9 @@ namespace BindOpen.Tests.Commands
     [TestFixture, Order(400)]
     public class OptionsTests
     {
-        private IBdoLog _log;
-
-        private dynamic _testData;
-
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _testData = new
-            {
-                itemNumber = 1000
-            };
         }
 
         [Test, Order(1)]
@@ -28,13 +18,22 @@ namespace BindOpen.Tests.Commands
         {
             var options = BdoCommands.NewOptionSet(
                 BdoCommands.NewOption("version", "--version", "-v")
-                    .WithDataValueType(DataValueTypes.Text)
+                    .WithLabel(LabelFormats.OnlyName)
+                    .WithDataType(DataValueTypes.Text)
                     .AsRequired(),
-                BdoCommands.NewOption("help", "--help", "-h"));
+                BdoCommands.NewOption(LabelFormats.OnlyName, "help", "--help", "-h"));
 
             var args = new[] { "--version", "-h" };
 
             var parameters = args.ParseArguments(options);
+        }
+
+        [Test, Order(2)]
+        public void CreateArguments()
+        {
+            var commandLine = @"version=1 -h ""toto"" p --help";
+
+            var parameters = commandLine.GetArguments();
         }
     }
 }

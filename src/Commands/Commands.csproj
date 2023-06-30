@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <AssemblyName>BindOpen.Commands</AssemblyName>
-    <PackageId>BindOpen.Commands</PackageId>
-    <Product>BindOpen.Commands</Product>
+    <AssemblyName>BindOpen.Labs.Commands</AssemblyName>
+    <PackageId>BindOpen.Labs.Commands</PackageId>
+    <Product>BindOpen.Labs.Commands</Product>
     <Company>BindOpen</Company>
     <Copyright>Copyright ©BindOpen 2011-2023</Copyright>
     <Description>This package deal with command line of BindOpen framework.</Description>
     <Authors>Sumer Team</Authors>
-    <RootNamespace>BindOpen.Commands</RootNamespace>
-    <PackageProjectUrl>https://github.com/bindopen/BindOpen.Commands</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/bindopen/BindOpen.Commands.git</RepositoryUrl>
+    <RootNamespace>BindOpen.Labs.Commands</RootNamespace>
+    <PackageProjectUrl>https://github.com/bindopen/BindOpen.Labs.Commands</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/bindopen/BindOpen.Labs.Commands.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>bindopen_icon.png</PackageIcon>
@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>BindOpen.Commands.xml</DocumentationFile>
+    <DocumentationFile>BindOpen.Labs.Commands.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -40,11 +40,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BindOpen.Data" Version="1.2.12" />
+    <PackageReference Include="BindOpen.System.Data" Version="1.2.51" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BindOpen.Commands.Abstrations\Commands.Abstrations.csproj" />
+    <ProjectReference Include="..\Abstrations\Abstrations.csproj" />
   </ItemGroup>
 
 </Project>
