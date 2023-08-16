@@ -3,7 +3,10 @@ Todo list for BindOpen.Labs.Commands
 
 ## Next tasks
 
-- [ ] Option factories
+- [ ] Generate help text
+- [ ] Deep option checking
+- [ ] Generate option from formated text
+- [ ] Options in cascade
 
 ## Stuff to check out later on
 
