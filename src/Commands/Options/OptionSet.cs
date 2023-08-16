@@ -108,16 +108,16 @@ namespace BindOpen.Labs.Commands
         /// <summary>
         /// 
         /// </summary>
-        public IBdoDictionary Description { get; set; }
+        public ITBdoDictionary<string> Description { get; set; }
 
         public IOptionSet AddDescription(KeyValuePair<string, string> item)
         {
-            Description ??= BdoData.NewDictionary();
+            Description ??= BdoData.NewDictionary<string>();
             Description.Add(item);
             return this;
         }
 
-        public IOptionSet WithDescription(IBdoDictionary dictionary)
+        public IOptionSet WithDescription(ITBdoDictionary<string> dictionary)
         {
             Description = dictionary;
             return this;
