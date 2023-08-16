@@ -7,7 +7,7 @@ namespace BindOpen.Labs.Commands
     /// <summary>
     /// This class represents the application argument parser.
     /// </summary>
-    public static partial class BdoCommands
+    public static partial class ParameterHelper
     {
         /// <summary>
         /// Checks this instance.
@@ -29,37 +29,37 @@ namespace BindOpen.Labs.Commands
             {
                 if (!allowMissingItems)
                 {
-                    foreach (var option in optionSet.Items.Where(p => p.Requirement == RequirementLevels.Required))
+                    foreach (var option in optionSet.Items.Where(p => p.RequirementLevel == RequirementLevels.Required))
                     {
                         if (!paramSet.Has(option.Name))
                         {
                             isValid = false;
-                            log.AddEvent(EventKinds.Error, "Option '" + option.Name + "' missing");
+                            log?.AddEvent(EventKinds.Error, "Option '" + option.Name + "' missing");
                         }
                     }
                 }
 
                 foreach (var param in paramSet)
                 {
-                    var option = param?.Specs?.Get();
+                    var option = param?.Spec;
                     if (option != null)
                     {
                         var value = param.GetData<string>();
 
-                        switch (option.DataRequirement)
+                        switch (option.DataRequirementLevel)
                         {
                             case RequirementLevels.Required:
                                 if (string.IsNullOrEmpty(value))
                                 {
                                     isValid = false;
-                                    log.AddEvent(EventKinds.Error, "Option '" + option.Name + "' requires value");
+                                    log?.AddEvent(EventKinds.Error, "Option '" + option.Name + "' requires value");
                                 }
                                 break;
                             case RequirementLevels.Forbidden:
                                 if (!string.IsNullOrEmpty(value))
                                 {
                                     isValid = false;
-                                    log.AddEvent(EventKinds.Error, "Option '" + option.Name + "' does not allow value");
+                                    log?.AddEvent(EventKinds.Error, "Option '" + option.Name + "' does not allow value");
                                 }
                                 break;
                         }
