@@ -48,8 +48,8 @@ namespace BindOpen.Tests.Commands
                     .AsRequired(),
                 BdoCommands.NewOption(LabelFormats.OnlyName, "help", "--help", "-h")
                     .WithDataType(DataValueTypes.Boolean),
-                BdoCommands.NewOption(LabelFormats.NameSpaceValue, "input", "--i", "-i")
-                    .WithDataType(DataValueTypes.Integer));
+                BdoCommands.NewOption(LabelFormats.NameSpaceValue, DataValueTypes.Integer, "input", "--i", "-i")
+            );
 
             var args = new[] { "--version", "1.0", "-h", "-i 123" };
 

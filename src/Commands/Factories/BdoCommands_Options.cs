@@ -27,12 +27,25 @@ namespace BindOpen.Labs.Commands
             LabelFormats format,
             string name = null,
             params string[] aliases)
+            => NewOption(LabelFormats.OnlyName, DataValueTypes.Any, name, aliases);
+
+        /// <summary>
+        /// Instantiates a new instance of the OptionSpec class.
+        /// </summary>
+        /// <param name="nameKind">The name kind to consider.</param>
+        /// <param name="aliases">Aliases of the option to add.</param>
+        public static Option NewOption(
+            LabelFormats format,
+            DataValueTypes valueType,
+            string name = null,
+            params string[] aliases)
         {
             var spec = BdoData.NewSpec<Option>();
 
             spec
                 .WithLabel(format)
                 .WithAliases(aliases)
+                .WithDataType(valueType)
                 .WithMinDataItemNumber((uint)(format.HasValue() ? 1 : 0))
                 .WithMaxDataItemNumber((uint)(format.HasName() ? 0 : 1))
                 .WithName(name);
