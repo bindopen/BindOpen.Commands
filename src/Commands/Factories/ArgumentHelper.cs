@@ -98,7 +98,7 @@ namespace BindOpen.Labs.Commands
 
                             param.WithSpec(option);
 
-                            if (option.DataRequirementLevel == RequirementLevels.None || option.DataRequirementLevel.IsPossible())
+                            if (option.ItemRequirementLevel == RequirementLevels.None || option.ItemRequirementLevel.IsPossible())
                             {
                                 if (!string.IsNullOrEmpty(option.Label))
                                 {
@@ -118,7 +118,7 @@ namespace BindOpen.Labs.Commands
                                     if (tokenSet?.Count > 0)
                                     {
                                         tokenSet.Map(
-                                            (LabelFormatsExtensions.__Script_This_Value, q =>
+                                            (LabelFormatsExtensions.__This_Value, q =>
                                             {
                                                 var obj = q.GetData<string>().ToObject(q.DataType?.ValueType ?? DataValueTypes.Any);
                                                 param.WithData(obj);
@@ -127,7 +127,7 @@ namespace BindOpen.Labs.Commands
                                         );
                                     }
 
-                                    if (option.Label?.Contains(LabelFormatsExtensions.__Script_This_Value) != true)
+                                    if (option.Label?.Contains(LabelFormatsExtensions.__This_Value) != true)
                                     {
                                         if (param.DataType.ValueType == DataValueTypes.Boolean
                                             || param.DataType.ValueType == DataValueTypes.Any)
@@ -210,7 +210,7 @@ namespace BindOpen.Labs.Commands
             if (!string.IsNullOrEmpty(pattern))
             {
                 arg?.ExtractTokenMetas(pattern)?.Map(
-                    (LabelFormatsExtensions.__Script_This_Name, q => { arg = q.GetData<string>(); }
+                    (LabelFormatsExtensions.__This_Name, q => { arg = q.GetData<string>(); }
                 )
                 );
 

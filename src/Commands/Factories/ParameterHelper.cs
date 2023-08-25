@@ -46,7 +46,7 @@ namespace BindOpen.Labs.Commands
                     {
                         var value = param.GetData<string>();
 
-                        switch (option.DataRequirementLevel)
+                        switch (option.ItemRequirementLevel)
                         {
                             case RequirementLevels.Required:
                                 if (string.IsNullOrEmpty(value))

@@ -1,8 +1,7 @@
-﻿using BindOpen.Labs.Commands;
-using BindOpen.Labs.Commands.Tests;
+﻿using BindOpen.Labs.Commands.Tests;
 using NUnit.Framework;
 
-namespace BindOpen.Tests.Commands
+namespace BindOpen.Labs.Commands
 {
     [TestFixture, Order(400)]
     public class OptionsTests
@@ -12,23 +11,12 @@ namespace BindOpen.Tests.Commands
         {
         }
 
-        [Test, Order(3)]
-        public void FromOptionSetTest()
-        {
-            var options = OptionSetFaker.CreateFlat();
-
-            var args = new[] { "--version", "1.0", "-h", "-i 123" };
-
-            var parameters = args.ParseArguments(options);
-            Assert.That(parameters.Count == 3, "Bad argument parsing");
-        }
-
         [Test, Order(4)]
         public void FromClassTest()
         {
-            //var options = BdoCommands.NewOptionSet<OptionFake>();
+            var optionSet = BdoCommands.NewOptionSet<OptionFake>();
 
-            //Assert.That(options.Children().Count == 3, "Bad argument parsing");
+            Assert.That(optionSet.Count == 3, "Bad argument parsing");
         }
     }
 }
