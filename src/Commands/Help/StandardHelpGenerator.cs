@@ -1,5 +1,6 @@
 ﻿using BindOpen.System.Data;
 using BindOpen.System.Data.Helpers;
+using BindOpen.System.Data.Meta;
 using System.Linq;
 
 namespace BindOpen.Labs.Commands
@@ -37,73 +38,93 @@ namespace BindOpen.Labs.Commands
 
             // Description
 
-            help += "Description: ";
-            help += "\r\n" + optionSet?.Description?[uiCulture];
-            help += "\r\n";
+            var description = optionSet?.Description?[uiCulture, StringHelper.__Star];
+            if (!string.IsNullOrEmpty(description))
+            {
+                help += "Description: ";
+                help += "\r\n" + description;
+                help += "\r\n" + "\r\n";
+            }
 
             // Usage
 
-            help += "\r\n";
-            help += "\r\n" + "Usage: ";
+            help += "Usage: ";
             help += optionSet?.Name;
 
-            foreach (var option in optionSet)
+            var subHelp = "";
+            foreach (var option in optionSet.OrderBy(q => q.Index ?? int.MaxValue))
             {
-                help += GetUsageDescription(option, uiCulture);
+                var (h, sH) = GetUsageDescription(option, uiCulture);
+
+                help += h;
+                subHelp += sH;
             }
+            help += "\r\n";
+
+            if (!string.IsNullOrEmpty(subHelp))
+            {
+                help += subHelp;
+                help += "\r\n";
+            }
+            help += "\r\n";
 
             // Option description
 
-            help += "\r\n";
-            help += "\r\n" + "Options:";
-
+            var optionsLabel = "";
             foreach (var option in optionSet)
             {
-                help += GetOptionDescription(option, uiCulture, " ");
+                optionsLabel += GetOptionDescription(option, uiCulture, "  ");
             }
-
-            help += "\r\n";
+            if (!string.IsNullOrEmpty(optionsLabel))
+            {
+                help += "Options:";
+                help += optionsLabel;
+                help += "\r\n";
+            }
 
             return help;
         }
 
-        private string GetUsageDescription(IOption option, string uiCulture = StringHelper.__Star)
+        private (string Help, string SubHelp) GetUsageDescription(IOption option, string uiCulture = StringHelper.__Star, string subHelpOffset = "  ")
         {
             var help = "";
+            var subHelp = "";
 
-            if (option == null) return help;
+            if (option == null) return (help, subHelp);
 
-            help += " ";
+            help = " ";
+            subHelp = "";
 
-            var label = "";
-            if (option.Label != null)
-            {
-                label = option.Name + " " + (option.Title?[uiCulture, StringHelper.__Star] ?? "value");
+            var label = GetOptionLabel(option, false, uiCulture);
 
-                //label = option.Label.Format(
-                //    (LabelFormatsExtensions.__Script_This_Name, option.Name),
-                //    (LabelFormatsExtensions.__Script_This_Value, option.Title[uiCulture, StringHelper.__Star]));
-            }
-            else
-            {
-                label = option.Name;
-            }
             if (option._Children?.Any() == true)
             {
-                foreach (var child in option._Children)
+                foreach (var child in option._Children.OrderBy(q => q.Index ?? int.MaxValue))
                 {
-                    label += GetUsageDescription(option, uiCulture);
+                    if (child is IOption optionChild)
+                    {
+                        var (h, sH) = GetUsageDescription(optionChild, uiCulture, subHelpOffset + "  ");
+
+                        subHelp += h + sH;
+                    }
                 }
             }
 
             help += option.RequirementLevel switch
             {
-                RequirementLevels.Required => "[" + label + "]",
-                RequirementLevels.Optional => "(" + label + ")",
-                _ => "[" + option.Name + "]",
+                RequirementLevels.Required => label,
+                RequirementLevels.Optional => "[" + label + "]",
+                _ => label,
             };
 
-            return help;
+            if (!string.IsNullOrEmpty(subHelp))
+            {
+                var group = GetOptionLabel(option, true, uiCulture);
+                subHelp = "\r\n" + subHelpOffset + group + ":" + subHelp;
+            }
+
+
+            return (help, subHelp);
         }
 
         private string GetOptionDescription(IOption option, string uiCulture = StringHelper.__Star, string offset = "")
@@ -112,17 +133,110 @@ namespace BindOpen.Labs.Commands
 
             if (option == null) return help;
 
-            help += "\r\n" + offset + option.Name + ": " + option.Description?[uiCulture, StringHelper.__Star];
-
+            var subHelp = "";
             if (option._Children?.Any() == true)
             {
-                foreach (var child in option._Children)
+                foreach (var child in option._Children.OrderBy(q => q.Index ?? int.MaxValue))
                 {
-                    help += "\r\n" + offset + GetOptionDescription(option, uiCulture, offset + " ");
+                    if (child is IOption optionChild)
+                    {
+                        subHelp += GetOptionDescription(optionChild, uiCulture, offset + "  ");
+                    }
                 }
             }
 
+            var description = option.Description?[uiCulture, StringHelper.__Star];
+
+            if (!string.IsNullOrEmpty(description) || !string.IsNullOrEmpty(subHelp))
+            {
+                var label = GetOptionLabel(option, true, uiCulture);
+
+                var valueTypeText = "";
+                if (option._Children?.Any() != true
+                    && option.DataType?.ValueType != null
+                    && option.DataType?.ValueType != DataValueTypes.Any
+                    && option.DataType?.ValueType != DataValueTypes.None
+                    && option.DataType?.ValueType != DataValueTypes.Null
+                    && option.DataType?.ValueType != DataValueTypes.Text)
+                {
+                    valueTypeText = "(" + option.DataType.ValueType.ToString().ToLower() + ") ";
+                }
+
+                help += "\r\n" + offset + label + ": " + valueTypeText + description;
+
+                help += subHelp;
+            }
+
             return help;
+        }
+
+        private string GetOptionLabel(IOption option, bool shortMode, string uiCulture = StringHelper.__Star)
+        {
+            if (option == null) return null;
+
+            var label = "";
+
+            if (shortMode && option._Children?.Any() == true)
+            {
+                label = option.Title?[uiCulture, StringHelper.__Star] ?? option.Name;
+            }
+            else
+            {
+                var labels = option.Aliases?.Select(q => q?.Trim()).ToList();
+                if (shortMode)
+                {
+                    label = labels.FirstOrDefault();
+                }
+                else
+                {
+                    label = string.Join("|", labels);
+                }
+
+                if (option.Label != null)
+                {
+                    var optionLabel = option.Label;
+
+                    var hasValue = optionLabel.ExtractTokens().Any(q => q.BdoKeyEquals(LabelFormatsExtensions.__This_Value));
+
+                    var valueLabel = option.Title?[uiCulture, StringHelper.__Star] ?? (!string.IsNullOrEmpty(option.Name) ? option.Name : labels.FirstOrDefault());
+
+                    if (shortMode && (!hasValue || option.DataType?.ValueType != DataValueTypes.Null))
+                    {
+                        label = valueLabel;
+                    }
+                    else
+                    {
+                        if (option._Children?.Any() == true)
+                        {
+                            if (option.DataType?.ValueType != DataValueTypes.Null || hasValue)
+                            {
+                                optionLabel = LabelFormats.NameSpaceValue.GetScript();
+                                valueLabel = "[" + valueLabel + "]";
+                            }
+                            else
+                            {
+                                optionLabel = LabelFormats.OnlyValue.GetScript();
+                            }
+                        }
+                        else
+                        {
+                            if (option.DataType?.ValueType != DataValueTypes.Null && !hasValue)
+                            {
+                                optionLabel = LabelFormats.OnlyValue.GetScript();
+                            }
+
+                            valueLabel = "<" + valueLabel + ">";
+                        }
+
+                        label = optionLabel.FormatFromTokens(
+                            BdoData.NewMetaSet(
+                                (LabelFormatsExtensions.__This_Name, label),
+                                (LabelFormatsExtensions.__This_Value, valueLabel)));
+                    }
+                }
+            }
+
+            return label;
         }
     }
 }

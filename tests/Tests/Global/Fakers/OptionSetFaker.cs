@@ -9,15 +9,67 @@ namespace BindOpen.Labs.Commands.Tests
     public static class OptionSetFaker
     {
         public static IOptionSet CreateFlat() =>
-             BdoCommands.NewOptionSet(
-                 "sample",
-                 BdoCommands.NewOption("version", "--version", "-v")
-                     .WithLabel(LabelFormats.NameSpaceValue)
-                     .WithDataType(DataValueTypes.Text)
-                     .AsRequired(),
-                 BdoCommands.NewOption(LabelFormats.OnlyName, "help", "--help", "-h")
-                     .WithDataType(DataValueTypes.Boolean),
-                 BdoCommands.NewOption(LabelFormats.NameSpaceValue, DataValueTypes.Integer, "input", "--i", "-i")
-             );
+            BdoCommands.NewOptionSet(
+                "sample",
+                BdoCommands.NewOption("version", "--version", "-v")
+                    .WithLabel(LabelFormats.NameSpaceValue)
+                    .WithDataType(DataValueTypes.Text)
+                    .AsRequired()
+                    .WithDescription("Display the version of the application.")
+                //.Execute(q => Task_Version())
+                ,
+                BdoCommands.NewOption("path")
+                    .WithLabel(LabelFormats.OnlyValue)
+                    .WithDataType(DataValueTypes.Text)
+                    .AsRequired()
+                    .WithTitle("_path")
+                    .WithDescription("The path."),
+
+                BdoCommands.NewOption("additional-deps")
+                    .WithDataType(DataValueTypes.Integer)
+                    .WithTitle("depth")
+                    .WithDescription("The additional depth."),
+
+                BdoCommands.NewOption("help", "--help", "-h")
+                //.WithNullValue()
+                ,
+                BdoCommands.NewOption(LabelFormats.NameSpaceValue, DataValueTypes.Integer, "input", "--i", "-i")
+                    .WithTitle("inputs")
+                    .WithDescription("The inputs of the application.")
+                    .WithIndex(1)
+                    .WithChildren(
+                        BdoCommands.NewOption("auto", "--a", "-auto")
+                            .WithDescription("Indicates whether input is automatic."),
+                        BdoCommands.NewOption(DataValueTypes.Text, "file", "--f", "-f")
+                    //.WithCondition(BdoScript.This().Parent().GetValue().Eq("abc"))
+                    //.AsRequired(BdoScript._This().Parent().Has("file"))
+                    //.Execute(q => Task_Inputs())
+                    ),
+
+                BdoCommands.NewSectionOption(
+                    "output",
+                    BdoCommands.NewOption(LabelFormats.NameSpaceValue, "output", "--o", "-o"),
+                    BdoCommands.NewOption("auto", "--a", "-auto")
+                        .WithDescription("Indicates whether output is automatic."),
+                    BdoCommands.NewOption(DataValueTypes.Text, "file", "--f", "-f"),
+                    BdoCommands.NewSectionOption(
+                        "sub.output",
+                        BdoCommands.NewOption(LabelFormats.NameSpaceValue, "sub.output", "--so", "-so"),
+                        BdoCommands.NewOption("sauto", "--a", "-sauto")
+                            .WithDescription("Indicates whether output is automatic."),
+                        BdoCommands.NewOption(DataValueTypes.Text, "sfile", "--sf", "-sf")))
+                    .WithTitle("outputs")
+                    .WithDescription("The outputs of the application.")
+                    .WithIndex(2)
+            )
+            .WithDescription("Sample show you the way to simply specify the options of your application.");
+
+        public static void Task_Version()
+        {
+        }
+
+        public static void Task_Inputs()
+        {
+        }
     }
 }
