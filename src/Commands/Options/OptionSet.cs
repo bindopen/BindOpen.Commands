@@ -40,11 +40,11 @@ namespace BindOpen.Labs.Commands
         {
             string helpText = Description?[uiCulture];
 
-            foreach (var aElementSpec in Items)
+            foreach (var option in this)
             {
-                foreach (string aAlias in aElementSpec.Aliases)
+                foreach (string aAlias in option.Aliases)
                     helpText += (helpText?.Length == 0 ? string.Empty : ", ") + aAlias;
-                helpText += ": " + aElementSpec.Description?[uiCulture] + "\r\n";
+                helpText += ": " + option.Description?[uiCulture] + "\r\n";
             }
 
             return helpText;

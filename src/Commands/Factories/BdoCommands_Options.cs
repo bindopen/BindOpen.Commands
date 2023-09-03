@@ -1,5 +1,4 @@
 ﻿using BindOpen.System.Data;
-using BindOpen.System.Data.Conditions;
 using BindOpen.System.Data.Meta;
 
 namespace BindOpen.Labs.Commands
@@ -14,9 +13,8 @@ namespace BindOpen.Labs.Commands
         /// </summary>
         /// <param name="aliases">Aliases of the option to add.</param>
         public static Option NewOption(
-            string name = null,
             params string[] aliases)
-            => NewOption(LabelFormats.OnlyName, name, aliases);
+            => NewOption(LabelFormats.OnlyName, RequirementLevels.Optional, aliases);
 
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
@@ -25,30 +23,22 @@ namespace BindOpen.Labs.Commands
         /// <param name="aliases">Aliases of the option to add.</param>
         public static Option NewOption(
             LabelFormats format,
-            string name = null,
             params string[] aliases)
-        {
-            var spec = BdoData.NewSpec<Option>();
+            => NewOption(LabelFormats.OnlyName, DataValueTypes.Null, RequirementLevels.Optional, aliases);
 
-            spec
-                .WithLabel(format)
-                .WithAliases(aliases)
-                .WithMinDataItemNumber((uint)(format.HasValue() ? 1 : 0))
-                .WithMaxDataItemNumber((uint)(format.HasName() ? 0 : 1))
-                .WithName(name);
-
-            return spec;
-        }
+        public static Option NewOption(
+            DataValueTypes valueType,
+            params string[] aliases)
+            => NewOption(LabelFormats.NameSpaceValue, valueType, RequirementLevels.Optional, aliases);
 
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
         /// </summary>
         /// <param name="aliases">Aliases of the option to add.</param>
         public static Option NewOption(
-            IBdoCondition condition,
-            string name = null,
+            RequirementLevels requirementLevel,
             params string[] aliases)
-            => NewOption(condition, LabelFormats.OnlyName, name, aliases);
+            => NewOption(LabelFormats.OnlyName, requirementLevel, aliases);
 
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
@@ -56,34 +46,73 @@ namespace BindOpen.Labs.Commands
         /// <param name="nameKind">The name kind to consider.</param>
         /// <param name="aliases">Aliases of the option to add.</param>
         public static Option NewOption(
-            IBdoCondition condition,
             LabelFormats format,
-            string name = null,
+            RequirementLevels requirementLevel,
+            params string[] aliases)
+            => NewOption(format, DataValueTypes.Null, requirementLevel, aliases);
+
+        public static Option NewOption(
+            DataValueTypes valueType,
+            RequirementLevels requirementLevel,
+            params string[] aliases)
+            => NewOption(LabelFormats.NameSpaceValue, valueType, requirementLevel, aliases);
+
+        /// <summary>
+        /// Instantiates a new instance of the OptionSpec class.
+        /// </summary>
+        /// <param name="nameKind">The name kind to consider.</param>
+        /// <param name="aliases">Aliases of the option to add.</param>
+        public static Option NewOption(
+            LabelFormats format,
+            DataValueTypes valueType,
+            params string[] aliases)
+            => NewOption(format, valueType, RequirementLevels.Optional, aliases);
+
+        /// <summary>
+        /// Instantiates a new instance of the OptionSpec class.
+        /// </summary>
+        /// <param name="nameKind">The name kind to consider.</param>
+        /// <param name="aliases">Aliases of the option to add.</param>
+        public static Option NewOption(
+            LabelFormats format,
+            DataValueTypes valueType,
+            RequirementLevels requirementLevel,
             params string[] aliases)
         {
             var spec = BdoData.NewSpec<Option>();
 
             spec
-                .WithCondition(condition)
                 .WithLabel(format)
                 .WithAliases(aliases)
+                .WithDataType(valueType)
+                .AddRequirement(requirementLevel)
                 .WithMinDataItemNumber((uint)(format.HasValue() ? 1 : 0))
-                .WithMaxDataItemNumber((uint)(format.HasName() ? 0 : 1))
-                .WithName(name);
+                .WithMaxDataItemNumber((uint)(format.HasName() ? 0 : 1));
 
             return spec;
         }
+
+        // Group
 
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
         /// </summary>
         /// <param name="aliases">Aliases of the option to add.</param>
-        public static OptionSet NewOptionSet(
-            params IOption[] options)
-        {
-            var set = new OptionSet();
-            set.With(options);
-            return set;
-        }
+        public static Option NewSectionOption(
+            RequirementLevels requirementLevel,
+            string name = null,
+            params IOption[] children)
+            => NewOption(LabelFormats.Any, DataValueTypes.Null, requirementLevel)
+                .WithName(name)
+                .WithChildren(children);
+
+        public static Option NewSectionOption(
+            string name,
+            params IOption[] children)
+            => NewSectionOption(RequirementLevels.Optional, name, children);
+
+        public static Option NewSectionOption(
+            params IOption[] children)
+            => NewSectionOption(null as string, children);
     }
 }

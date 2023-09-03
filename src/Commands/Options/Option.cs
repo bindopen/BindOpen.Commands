@@ -1,11 +1,14 @@
-﻿using BindOpen.System.Data.Meta;
+﻿using BindOpen.System.Data;
+using BindOpen.System.Data.Meta;
+using System;
+using System.Collections.Generic;
 
 namespace BindOpen.Labs.Commands
 {
     /// <summary>
     /// This class represents an option specification.
     /// </summary>
-    public class Option : BdoAggregateSpec, IOption
+    public class Option : BdoSpec, IOption
     {
         // -------------------------------------------------------------
         // CONSTRUCTORS
@@ -21,5 +24,7 @@ namespace BindOpen.Labs.Commands
         }
 
         #endregion
+
+        public List<(IBdoExpression Expression, Action)> Executions { get; set; }
     }
 }

@@ -1,11 +1,11 @@
-﻿using BindOpen.System.Data;
+﻿using BindOpen.System.Data.Meta;
 
 namespace BindOpen.Labs.Commands
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface IParameterSet : ITBdoSet<IParameter>
+    public interface IParameterSet : IBdoMetaNode
     {
     }
 }
