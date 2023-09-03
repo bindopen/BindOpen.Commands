@@ -2,6 +2,8 @@
 using BindOpen.System.Data.Helpers;
 using BindOpen.System.Data.Meta;
 using BindOpen.System.Logging;
+using BindOpen.System.Scoping;
+using BindOpen.System.Scoping.Script;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +57,8 @@ namespace BindOpen.Labs.Commands
         /// <param name="log">The log to consider.</param>
         /// <returns>Returns the log of argument building.</returns>
         public static IParameterSet ParseArguments(
-            this string[] arguments,
+            this IBdoScope scope,
+            string[] arguments,
             IOptionSet optionSet = null,
             bool allowMissingItems = false,
             IBdoLog log = null)
@@ -98,7 +101,10 @@ namespace BindOpen.Labs.Commands
 
                             param.WithSpec(option);
 
-                            if (option.ItemRequirementLevel == RequirementLevels.None || option.ItemRequirementLevel.IsPossible())
+                            var varSet = BdoData.NewMetaSet((BdoScript.__VarName_This, param));
+                            var requirementLevel = param.WhatRequirement(scope, varSet, log);
+
+                            if (requirementLevel == RequirementLevels.None || requirementLevel.IsPossible())
                             {
                                 if (!string.IsNullOrEmpty(option.Label))
                                 {
@@ -150,7 +156,7 @@ namespace BindOpen.Labs.Commands
                 }
             }
 
-            paramSet.Check(optionSet, log: log);
+            scope.Check(paramSet, optionSet, log: log);
 
             return paramSet;
         }

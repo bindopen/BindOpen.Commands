@@ -1,5 +1,7 @@
 ﻿using BindOpen.System.Data;
+using BindOpen.System.Data.Conditions;
 using BindOpen.System.Data.Meta;
+using BindOpen.System.Scoping.Script;
 
 namespace BindOpen.Labs.Commands.Tests
 {
@@ -16,7 +18,7 @@ namespace BindOpen.Labs.Commands.Tests
                     .WithDataType(DataValueTypes.Text)
                     .AsRequired()
                     .WithDescription("Display the version of the application.")
-                //.Execute(q => Task_Version())
+                    .Execute(() => Task_Version())
                 ,
                 BdoCommands.NewOption("path")
                     .WithLabel(LabelFormats.OnlyValue)
@@ -31,7 +33,7 @@ namespace BindOpen.Labs.Commands.Tests
                     .WithDescription("The additional depth."),
 
                 BdoCommands.NewOption("help", "--help", "-h")
-                //.WithNullValue()
+                    .WithNullValue()
                 ,
                 BdoCommands.NewOption(LabelFormats.NameSpaceValue, DataValueTypes.Integer, "input", "--i", "-i")
                     .WithTitle("inputs")
@@ -41,11 +43,10 @@ namespace BindOpen.Labs.Commands.Tests
                         BdoCommands.NewOption("auto", "--a", "-auto")
                             .WithDescription("Indicates whether input is automatic."),
                         BdoCommands.NewOption(DataValueTypes.Text, "file", "--f", "-f")
-                    //.WithCondition(BdoScript.This().Parent().GetValue().Eq("abc"))
-                    //.AsRequired(BdoScript._This().Parent().Has("file"))
-                    //.Execute(q => Task_Inputs())
-                    ),
-
+                            .WithCondition((BdoCondition)BdoScript._Parent<IBdoMetaData>()._Has("auto"))
+                            .AsRequired((BdoCondition)BdoScript._Parent<IBdoMetaData>()._Has("file"))
+                            .Execute(() => Task_Inputs())
+                ),
                 BdoCommands.NewSectionOption(
                     "output",
                     BdoCommands.NewOption(LabelFormats.NameSpaceValue, "output", "--o", "-o"),

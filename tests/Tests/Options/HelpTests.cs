@@ -17,7 +17,7 @@ namespace BindOpen.Labs.Commands
         {
             var options = OptionSetFaker.CreateFlat();
 
-            var help = options.GetHelpText();
+            var help = SystemData.Scope.GetHelpText(options);
 
             Debug.WriteLine(help);
 

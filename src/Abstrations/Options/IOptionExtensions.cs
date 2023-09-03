@@ -1,18 +1,32 @@
-﻿namespace BindOpen.Labs.Commands
+﻿using BindOpen.System.Data;
+using System;
+
+namespace BindOpen.Labs.Commands
 {
     /// <summary>
     /// 
     /// </summary>
     public static class IOptionExtensions
     {
+        public static T Execute<T>(
+            this T option,
+            Action action)
+            where T : IOption
+            => option.Execute(null, action);
 
-        //public static T WithOnlyAliases<T>(this T option)
-        //    where T : IOption
-        //{
-        //    option.OnlyConsiderAliases = true;
+        public static T Execute<T>(
+            this T option,
+            IBdoExpression expression,
+            Action action)
+            where T : IOption
+        {
+            if (option != null)
+            {
+                option.Executions ??= new();
+                option.Executions.Add((expression, action));
+            }
 
-        //    return option;
-        //}
-
+            return option;
+        }
     }
 }

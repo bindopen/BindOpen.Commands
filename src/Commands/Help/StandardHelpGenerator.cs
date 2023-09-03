@@ -1,6 +1,8 @@
 ﻿using BindOpen.System.Data;
 using BindOpen.System.Data.Helpers;
 using BindOpen.System.Data.Meta;
+using BindOpen.System.Scoping;
+using BindOpen.System.Scoping.Script;
 using System.Linq;
 
 namespace BindOpen.Labs.Commands
@@ -10,6 +12,8 @@ namespace BindOpen.Labs.Commands
     /// </summary>
     public class StandardHelpGenerator : IHelpGenerator
     {
+        public IBdoScope Scope { get; set; }
+
         // -------------------------------------------------------------
         // CONSTRUCTORS
         // -------------------------------------------------------------
@@ -110,7 +114,10 @@ namespace BindOpen.Labs.Commands
                 }
             }
 
-            help += option.RequirementLevel switch
+            var varSet = BdoData.NewMetaSet((BdoScript.__VarName_This, option));
+            var requirementLevel = option.RequirementStatement?.GetItem(Scope, varSet) ?? RequirementLevels.None;
+
+            help += requirementLevel switch
             {
                 RequirementLevels.Required => label,
                 RequirementLevels.Optional => "[" + label + "]",

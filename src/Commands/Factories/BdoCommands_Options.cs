@@ -85,7 +85,7 @@ namespace BindOpen.Labs.Commands
                 .WithLabel(format)
                 .WithAliases(aliases)
                 .WithDataType(valueType)
-                .WithRequirement(requirementLevel)
+                .AddRequirement(requirementLevel)
                 .WithMinDataItemNumber((uint)(format.HasValue() ? 1 : 0))
                 .WithMaxDataItemNumber((uint)(format.HasName() ? 0 : 1));
 

@@ -1,5 +1,8 @@
 ﻿using BindOpen.System.Data;
+using BindOpen.System.Data.Meta;
 using BindOpen.System.Logging;
+using BindOpen.System.Scoping;
+using BindOpen.System.Scoping.Script;
 using System.Linq;
 
 namespace BindOpen.Labs.Commands
@@ -18,7 +21,8 @@ namespace BindOpen.Labs.Commands
         /// <param name="log">The log to consider.</param>
         /// <returns>Returns the log of check.</returns>
         public static bool Check(
-            this IParameterSet paramSet,
+            this IBdoScope scope,
+            IParameterSet paramSet,
             IOptionSet optionSet,
             bool allowMissingItems = false,
             IBdoLog log = null)
@@ -29,7 +33,14 @@ namespace BindOpen.Labs.Commands
             {
                 if (!allowMissingItems)
                 {
-                    foreach (var option in optionSet.Items.Where(p => p.RequirementLevel == RequirementLevels.Required))
+                    var options = optionSet.Items.Where(q =>
+                    {
+                        var varSet = BdoData.NewMetaSet((BdoScript.__VarName_This, q));
+                        var requirementLevel = q.RequirementStatement?.GetItem(scope, varSet, log) ?? RequirementLevels.None;
+                        return requirementLevel == RequirementLevels.Required;
+                    });
+
+                    foreach (var option in options)
                     {
                         if (!paramSet.Has(option.Name))
                         {
@@ -44,9 +55,12 @@ namespace BindOpen.Labs.Commands
                     var option = param?.Spec;
                     if (option != null)
                     {
+                        var varSet = BdoData.NewMetaSet((BdoScript.__VarName_This, param));
+                        var requirementLevel = param.WhatItemRequirement(scope, varSet, log);
+
                         var value = param.GetData<string>();
 
-                        switch (option.ItemRequirementLevel)
+                        switch (requirementLevel)
                         {
                             case RequirementLevels.Required:
                                 if (string.IsNullOrEmpty(value))

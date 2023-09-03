@@ -1,11 +1,12 @@
 ﻿using BindOpen.System.Data.Helpers;
+using BindOpen.System.Scoping;
 
 namespace BindOpen.Labs.Commands
 {
     /// <summary>
     /// 
     /// </summary>
-    public interface IHelpGenerator
+    public interface IHelpGenerator : IBdoScoped
     {
         /// <summary>
         /// 

@@ -51,7 +51,7 @@ namespace BindOpen.Labs.Commands
 
             var args = new[] { "--version", "1.0", "-h", "-i 123" };
 
-            var parameters = args.ParseArguments(options);
+            var parameters = SystemData.Scope.ParseArguments(args, options);
             Assert.That(parameters.Count == 3, "Bad argument parsing");
         }
     }
