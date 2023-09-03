@@ -2,6 +2,8 @@
 using BindOpen.System.Data.Helpers;
 using BindOpen.System.Data.Meta;
 using BindOpen.System.Logging;
+using BindOpen.System.Scoping;
+using BindOpen.System.Scoping.Script;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +57,8 @@ namespace BindOpen.Labs.Commands
         /// <param name="log">The log to consider.</param>
         /// <returns>Returns the log of argument building.</returns>
         public static IParameterSet ParseArguments(
-            this string[] arguments,
+            this IBdoScope scope,
+            string[] arguments,
             IOptionSet optionSet = null,
             bool allowMissingItems = false,
             IBdoLog log = null)
@@ -98,7 +101,10 @@ namespace BindOpen.Labs.Commands
 
                             param.WithSpec(option);
 
-                            if (option.DataRequirementLevel == RequirementLevels.None || option.DataRequirementLevel.IsPossible())
+                            var varSet = BdoData.NewMetaSet((BdoScript.__VarName_This, param));
+                            var requirementLevel = param.WhatRequirement(scope, varSet, log);
+
+                            if (requirementLevel == RequirementLevels.None || requirementLevel.IsPossible())
                             {
                                 if (!string.IsNullOrEmpty(option.Label))
                                 {
@@ -118,7 +124,7 @@ namespace BindOpen.Labs.Commands
                                     if (tokenSet?.Count > 0)
                                     {
                                         tokenSet.Map(
-                                            (LabelFormatsExtensions.__Script_This_Value, q =>
+                                            (LabelFormatsExtensions.__This_Value, q =>
                                             {
                                                 var obj = q.GetData<string>().ToObject(q.DataType?.ValueType ?? DataValueTypes.Any);
                                                 param.WithData(obj);
@@ -127,7 +133,7 @@ namespace BindOpen.Labs.Commands
                                         );
                                     }
 
-                                    if (option.Label?.Contains(LabelFormatsExtensions.__Script_This_Value) != true)
+                                    if (option.Label?.Contains(LabelFormatsExtensions.__This_Value) != true)
                                     {
                                         if (param.DataType.ValueType == DataValueTypes.Boolean
                                             || param.DataType.ValueType == DataValueTypes.Any)
@@ -150,7 +156,7 @@ namespace BindOpen.Labs.Commands
                 }
             }
 
-            paramSet.Check(optionSet, log: log);
+            scope.Check(paramSet, optionSet, log: log);
 
             return paramSet;
         }
@@ -210,7 +216,7 @@ namespace BindOpen.Labs.Commands
             if (!string.IsNullOrEmpty(pattern))
             {
                 arg?.ExtractTokenMetas(pattern)?.Map(
-                    (LabelFormatsExtensions.__Script_This_Name, q => { arg = q.GetData<string>(); }
+                    (LabelFormatsExtensions.__This_Name, q => { arg = q.GetData<string>(); }
                 )
                 );
 

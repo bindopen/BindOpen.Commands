@@ -1,11 +1,11 @@
-﻿using BindOpen.System.Data;
+﻿using BindOpen.System.Data.Meta;
 
 namespace BindOpen.Labs.Commands
 {
     /// <summary>
     /// This class represents a option set.
     /// </summary>
-    public class ParameterSet : TBdoSet<IParameter>, IParameterSet
+    public class ParameterSet : BdoMetaNode, IParameterSet
     {
         // -------------------------------------------------------------
         // CONSTRUCTORS

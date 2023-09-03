@@ -40,7 +40,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BindOpen.System.Data" Version="1.2.74" />
+    <PackageReference Include="BindOpen.System.Data" Version="1.2.92" />
+    <PackageReference Include="BindOpen.System.Scoping" Version="1.2.92" />
   </ItemGroup>
 
   <ItemGroup>
