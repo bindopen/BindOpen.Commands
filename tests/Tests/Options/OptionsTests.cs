@@ -1,7 +1,7 @@
-﻿using BindOpen.Labs.Commands.Tests;
+﻿using BindOpen.Plus.Commands.Tests;
 using NUnit.Framework;
 
-namespace BindOpen.Labs.Commands
+namespace BindOpen.Plus.Commands
 {
     [TestFixture, Order(400)]
     public class OptionsTests

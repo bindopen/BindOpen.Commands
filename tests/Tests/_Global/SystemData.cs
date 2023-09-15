@@ -2,7 +2,7 @@
 using BindOpen.System.Scoping;
 using BindOpen.System.Scoping.Script;
 
-namespace BindOpen.Labs.Commands.Tests
+namespace BindOpen.Plus.Commands.Tests
 {
     public static class SystemData
     {

@@ -3,7 +3,7 @@ using BindOpen.System.Data.Meta;
 using System;
 using System.Collections.Generic;
 
-namespace BindOpen.Labs.Commands
+namespace BindOpen.Plus.Commands
 {
     /// <summary>
     /// 
