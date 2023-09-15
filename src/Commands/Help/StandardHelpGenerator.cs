@@ -5,7 +5,7 @@ using BindOpen.System.Scoping;
 using BindOpen.System.Scoping.Script;
 using System.Linq;
 
-namespace BindOpen.Labs.Commands
+namespace BindOpen.Plus.Commands
 {
     /// <summary>
     /// This class represents a option specification set.

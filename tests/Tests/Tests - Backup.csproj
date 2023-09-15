@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <AssemblyName>BindOpen.Plus.Commands.Tests</AssemblyName>
-    <PackageId>BindOpen.Plus.Commands.Tests</PackageId>
-    <Product>BindOpen.Plus.Commands</Product>
+    <AssemblyName>BindOpen.Pulp.Commands.Tests</AssemblyName>
+    <PackageId>BindOpen.Pulp.Commands.Tests</PackageId>
+    <Product>BindOpen.Pulp.Commands</Product>
     <Company>BindOpen</Company>
     <Copyright>Copyright ©BindOpen 2011-2023</Copyright>
-    <Description>This package deal with command line of BindOpen.Plus.Commands framework.</Description>
+    <Description>This package deal with command line of BindOpen.Pulp.Commands framework.</Description>
     <Authors>Sumer Team</Authors>
-    <RootNamespace>BindOpen.Plus.Commands.Tests</RootNamespace>
+    <RootNamespace>BindOpen.Pulp.Commands.Tests</RootNamespace>
     <PackageProjectUrl>https://github.com/bindopen</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/bindopen/BindOpen.Plus.Commands.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/bindopen/BindOpen.Pulp.Commands.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>bindopen_icon.png</PackageIcon>
@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BindOpen.Kernel.Scoping.Script" Version="1.2.102" />
+    <PackageReference Include="BindOpen.Kernel.Scoping.Script" Version="1.2.92" />
     <PackageReference Include="Bogus" Version="34.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
     <PackageReference Include="NUnit" Version="3.13.3" />

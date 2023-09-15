@@ -1,4 +1,4 @@
-Todo list for BindOpen.Labs.Commands
+Todo list for BindOpen.Plus.Commands
 ====
 
 ## Next tasks

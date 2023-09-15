@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <AssemblyName>BindOpen.Plus.Commands.Abstractions</AssemblyName>
-    <PackageId>BindOpen.Plus.Commands.Abstractions</PackageId>
-    <Product>BindOpen.Plus.Commands</Product>
+    <AssemblyName>BindOpen.Pulp.Commands</AssemblyName>
+    <PackageId>BindOpen.Pulp.Commands</PackageId>
+    <Product>BindOpen.Pulp.Commands</Product>
     <Company>BindOpen</Company>
     <Copyright>Copyright ©BindOpen 2011-2023</Copyright>
-    <Description>This package provides the core abstractions of BindOpen.Plus.Commands.</Description>
+    <Description>A straightforward and comprehensive API for manipulating command-line arguments and handling related tasks.</Description>
     <Authors>Sumer Team</Authors>
-    <RootNamespace>BindOpen.Plus.Commands.Abstractions</RootNamespace>
-    <PackageProjectUrl>https://github.com/bindopen/BindOpen.Plus.Commands</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/bindopen/BindOpen.Plus.Commands.git</RepositoryUrl>
+    <RootNamespace>BindOpen.Pulp.Commands</RootNamespace>
+    <PackageProjectUrl>https://github.com/bindopen/BindOpen.Pulp.Commands</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/bindopen/BindOpen.Pulp.Commands.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>bindopen_icon.png</PackageIcon>
@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>BindOpen.Plus.Commands.xml</DocumentationFile>
+    <DocumentationFile>BindOpen.Pulp.Commands.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -40,7 +40,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BindOpen.System.Abstractions" Version="1.2.92" />
+    <PackageReference Include="BindOpen.System.Data" Version="1.2.92" />
+    <PackageReference Include="BindOpen.System.Scoping" Version="1.2.92" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Abstrations\Abstrations.csproj" />
   </ItemGroup>
 
 </Project>
