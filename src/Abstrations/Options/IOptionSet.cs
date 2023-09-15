@@ -1,6 +1,6 @@
 ﻿using BindOpen.System.Data;
 
-namespace BindOpen.Pulp.Commands
+namespace BindOpen.Plus.Commands
 {
     /// <summary>
     /// 

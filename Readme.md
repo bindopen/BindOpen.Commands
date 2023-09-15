@@ -1,4 +1,4 @@
-# BindOpen.Pulp.Commands
+# BindOpen.Plus.Commands
 
 ![BindOpen logo](https://storage.bindopen.org/img/logos/logo_bindopen.png)
 
@@ -190,7 +190,7 @@ All of our NuGet packages are available from [our NuGet.org profile page](https:
 
 [BindOpen.System.Logging](https://github.com/bindopen/BindOpen.System.Logging) provides a simple and multidimensional logging system, perfect to monitor nested task executions.
 
-[BindOpen.Pulp](https://github.com/bindopen/BindOpen.Pulp) is a collection of projects based on BindOpen.System.
+[BindOpen.Plus](https://github.com/bindopen/BindOpen.Plus) is a collection of projects based on BindOpen.System.
 
 
 A [full list of all the repos](https://github.com/bindopen?tab=repositories) is available as well.

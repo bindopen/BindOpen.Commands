@@ -1,8 +1,8 @@
-﻿using BindOpen.Pulp.Commands.Tests;
+﻿using BindOpen.Plus.Commands.Tests;
 using NUnit.Framework;
 using System.Linq;
 
-namespace BindOpen.Pulp.Commands
+namespace BindOpen.Plus.Commands
 {
     [TestFixture, Order(400)]
     public class ArgumentsTests

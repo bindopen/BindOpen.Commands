@@ -5,7 +5,7 @@ using BindOpen.System.Scoping;
 using BindOpen.System.Scoping.Script;
 using System.Linq;
 
-namespace BindOpen.Pulp.Commands
+namespace BindOpen.Plus.Commands
 {
     /// <summary>
     /// This class represents the application argument parser.
