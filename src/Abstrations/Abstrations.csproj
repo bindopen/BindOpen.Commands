@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <AssemblyName>BindOpen.Labs.Commands.Abstractions</AssemblyName>
-    <PackageId>BindOpen.Labs.Commands.Abstractions</PackageId>
-    <Product>BindOpen.Labs.Commands</Product>
+    <AssemblyName>BindOpen.Pulp.Commands.Abstractions</AssemblyName>
+    <PackageId>BindOpen.Pulp.Commands.Abstractions</PackageId>
+    <Product>BindOpen.Pulp.Commands</Product>
     <Company>BindOpen</Company>
     <Copyright>Copyright ©BindOpen 2011-2023</Copyright>
-    <Description>This package deal with command line of BindOpen framework.</Description>
+    <Description>This package provides the core abstractions of BindOpen.Pulp.Commands.</Description>
     <Authors>Sumer Team</Authors>
-    <RootNamespace>BindOpen.Labs.Commands.Abstractions</RootNamespace>
-    <PackageProjectUrl>https://github.com/bindopen/BindOpen.Labs.Commands</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/bindopen/BindOpen.Labs.Commands.git</RepositoryUrl>
+    <RootNamespace>BindOpen.Pulp.Commands.Abstractions</RootNamespace>
+    <PackageProjectUrl>https://github.com/bindopen/BindOpen.Pulp.Commands</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/bindopen/BindOpen.Pulp.Commands.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>bindopen_icon.png</PackageIcon>
@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>BindOpen.Labs.Commands.xml</DocumentationFile>
+    <DocumentationFile>BindOpen.Pulp.Commands.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

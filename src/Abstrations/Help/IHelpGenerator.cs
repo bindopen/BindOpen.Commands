@@ -1,7 +1,7 @@
 ﻿using BindOpen.System.Data.Helpers;
 using BindOpen.System.Scoping;
 
-namespace BindOpen.Labs.Commands
+namespace BindOpen.Pulp.Commands
 {
     /// <summary>
     /// 

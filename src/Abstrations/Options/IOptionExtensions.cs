@@ -1,7 +1,7 @@
 ﻿using BindOpen.System.Data;
 using System;
 
-namespace BindOpen.Labs.Commands
+namespace BindOpen.Pulp.Commands
 {
     /// <summary>
     /// 

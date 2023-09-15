@@ -1,8 +1,8 @@
-﻿using BindOpen.Labs.Commands.Tests;
+﻿using BindOpen.Pulp.Commands.Tests;
 using NUnit.Framework;
 using System.Diagnostics;
 
-namespace BindOpen.Labs.Commands
+namespace BindOpen.Pulp.Commands
 {
     [TestFixture, Order(400)]
     public class HelpTests

@@ -3,7 +3,7 @@ using BindOpen.System.Data.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BindOpen.Labs.Commands
+namespace BindOpen.Pulp.Commands
 {
     /// <summary>
     /// This class represents a option specification set.

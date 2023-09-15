@@ -1,6 +1,6 @@
 ﻿using BindOpen.System.Data.Meta;
 
-namespace BindOpen.Labs.Commands.Tests
+namespace BindOpen.Pulp.Commands.Tests
 {
     /// <summary>
     /// This class represents a fake class.

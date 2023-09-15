@@ -3,7 +3,7 @@ using BindOpen.System.Data.Meta;
 using BindOpen.System.Data.Meta.Reflection;
 using System.Linq;
 
-namespace BindOpen.Labs.Commands
+namespace BindOpen.Pulp.Commands
 {
     /// <summary>
     /// This class represents a option factory.

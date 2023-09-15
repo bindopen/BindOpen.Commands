@@ -1,6 +1,6 @@
 ﻿using BindOpen.System.Data.Meta;
 
-namespace BindOpen.Labs.Commands
+namespace BindOpen.Pulp.Commands
 {
     /// <summary>
     /// 
