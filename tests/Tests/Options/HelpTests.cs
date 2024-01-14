@@ -19,7 +19,7 @@ namespace BindOpen.Plus.Commands
 
             var help = SystemData.Scope.GetHelpText(options);
 
-            Debug.WriteLine(help);
+            Trace.WriteLine(help);
 
             Assert.That(!string.IsNullOrEmpty(help), "Could not generate help text");
         }

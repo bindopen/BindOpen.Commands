@@ -1,11 +1,17 @@
-﻿using BindOpen.System.Data.Helpers;
-using BindOpen.System.Scoping;
-using BindOpen.System.Scoping.Script;
+﻿using BindOpen.Data.Helpers;
+using BindOpen.Logging;
+using BindOpen.Logging.Loggers;
+using BindOpen.Scoping;
+using BindOpen.Scoping.Script;
 
 namespace BindOpen.Plus.Commands.Tests
 {
     public static class SystemData
     {
+        public static IBdoLog CreateLog() =>
+            BdoLogging.NewLog()
+                .WithLogger(BdoLogging.NewLogger<BdoTraceLogger>());
+
         static IBdoScope _appScope = null;
 
         /// <summary>
@@ -18,7 +24,8 @@ namespace BindOpen.Plus.Commands.Tests
                 if (_appScope == null)
                 {
                     _appScope = BdoScoping.NewScope();
-                    _appScope.LoadExtensions(q => q.AddAssemblyFrom<OptionFake>());
+                    _appScope.LoadExtensions(q => q
+                        .AddAssemblyFrom<OptionFake>());
                 }
 
                 return _appScope;

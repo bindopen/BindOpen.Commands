@@ -1,4 +1,4 @@
-﻿using BindOpen.System.Scoping;
+﻿using BindOpen.Scoping;
 
 namespace BindOpen.Plus.Commands
 {
@@ -8,25 +8,30 @@ namespace BindOpen.Plus.Commands
     public static partial class BdoCommands
     {
         /// <summary>
-        /// Instantiates a new instance of the OptionSpec class.
+        /// 
         /// </summary>
-        /// <param name="aliases">Aliases of the option to add.</param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="scope"></param>
+        /// <param name="option"></param>
+        /// <returns></returns>
         public static string GetHelpText<T>(
             this IBdoScope scope,
-            IOptionSet optionSet)
+            IOption option)
             where T : IHelpGenerator, new()
         {
             var generator = new T().WithScope(scope);
-            return generator.GetHelpText(optionSet);
+            return generator.GetHelpText(option);
         }
 
         /// <summary>
-        /// Instantiates a new instance of the OptionSpec class.
+        /// 
         /// </summary>
-        /// <param name="aliases">Aliases of the option to add.</param>
+        /// <param name="scope"></param>
+        /// <param name="option"></param>
+        /// <returns></returns>
         public static string GetHelpText(
             this IBdoScope scope,
-            IOptionSet optionSet)
-            => scope.GetHelpText<StandardHelpGenerator>(optionSet);
+            IOption option)
+            => scope.GetHelpText<StandardHelpGenerator>(option);
     }
 }

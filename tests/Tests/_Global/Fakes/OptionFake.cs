@@ -1,10 +1,12 @@
-﻿using BindOpen.System.Data.Meta;
+﻿using BindOpen.Data.Meta;
+using BindOpen.Scoping;
 
 namespace BindOpen.Plus.Commands.Tests
 {
     /// <summary>
     /// This class represents a fake class.
     /// </summary>
+    [BdoEntity()]
     public class OptionFake
     {
         // ------------------------------------------
