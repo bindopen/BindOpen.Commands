@@ -1,5 +1,4 @@
-﻿using BindOpen.System.Data;
-using BindOpen.System.Data.Meta;
+﻿using BindOpen.Data.Meta;
 using System;
 using System.Collections.Generic;
 
@@ -25,6 +24,6 @@ namespace BindOpen.Plus.Commands
 
         #endregion
 
-        public List<(IBdoExpression Expression, Action)> Executions { get; set; }
+        public List<(Predicate<IBdoMetaData> Condition, Action Action)> Executions { get; set; }
     }
 }

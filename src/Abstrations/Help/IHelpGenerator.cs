@@ -1,5 +1,5 @@
-﻿using BindOpen.System.Data.Helpers;
-using BindOpen.System.Scoping;
+﻿using BindOpen.Data.Helpers;
+using BindOpen.Scoping;
 
 namespace BindOpen.Plus.Commands
 {
@@ -11,8 +11,9 @@ namespace BindOpen.Plus.Commands
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="option"></param>
         /// <param name="uiCulture"></param>
         /// <returns></returns>
-        string GetHelpText(IOptionSet optionSet, string uiCulture = StringHelper.__Star);
+        string GetHelpText(IOption option, string uiCulture = StringHelper.__Star);
     }
 }

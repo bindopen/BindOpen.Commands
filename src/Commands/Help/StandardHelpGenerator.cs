@@ -1,8 +1,8 @@
-﻿using BindOpen.System.Data;
-using BindOpen.System.Data.Helpers;
-using BindOpen.System.Data.Meta;
-using BindOpen.System.Scoping;
-using BindOpen.System.Scoping.Script;
+﻿using BindOpen.Data;
+using BindOpen.Data.Helpers;
+using BindOpen.Data.Meta;
+using BindOpen.Scoping;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BindOpen.Plus.Commands
@@ -34,15 +34,15 @@ namespace BindOpen.Plus.Commands
         /// </summary>
         /// <param name="uiCulture">The UI culture to consider.</param>
         /// <returns>Returns the help text.</returns>
-        public string GetHelpText(IOptionSet optionSet, string uiCulture = StringHelper.__Star)
+        public string GetHelpText(IOption option, string uiCulture = StringHelper.__Star)
         {
-            if (optionSet == null) return null;
+            if (option == null) return null;
 
             string help = "";
 
             // Description
 
-            var description = optionSet?.Description?[uiCulture, StringHelper.__Star];
+            var description = option?.Description?[uiCulture, StringHelper.__Star];
             if (!string.IsNullOrEmpty(description))
             {
                 help += "Description: ";
@@ -53,15 +53,18 @@ namespace BindOpen.Plus.Commands
             // Usage
 
             help += "Usage: ";
-            help += optionSet?.Name;
+            help += option?.Name;
 
             var subHelp = "";
-            foreach (var option in optionSet.OrderBy(q => q.Index ?? int.MaxValue))
+            foreach (var spec in option._Children.OrderBy(q => q.Index ?? int.MaxValue))
             {
-                var (h, sH) = GetUsageDescription(option, uiCulture);
+                if (spec is IOption optionChild)
+                {
+                    var (h, sH) = GetUsageDescription(optionChild, uiCulture);
 
-                help += h;
-                subHelp += sH;
+                    help += h;
+                    subHelp += sH;
+                }
             }
             help += "\r\n";
 
@@ -75,10 +78,14 @@ namespace BindOpen.Plus.Commands
             // Option description
 
             var optionsLabel = "";
-            foreach (var option in optionSet)
+            foreach (var spec in option._Children)
             {
-                optionsLabel += GetOptionDescription(option, uiCulture, "  ");
+                if (spec is IOption optionChild)
+                {
+                    optionsLabel += GetOptionDescription(optionChild, uiCulture, "  ");
+                }
             }
+
             if (!string.IsNullOrEmpty(optionsLabel))
             {
                 help += "Options:";
@@ -114,8 +121,9 @@ namespace BindOpen.Plus.Commands
                 }
             }
 
-            var varSet = BdoData.NewMetaSet((BdoScript.__VarName_This, option));
-            var requirementLevel = option.RequirementStatement?.GetItem(Scope, varSet) ?? RequirementLevels.None;
+            var varSet = BdoData.NewSet((BdoData.__VarName_This, option));
+            var requirementLevel = option.GetRuleValue<RequirementLevels>(
+                BdoMetaDataProperties.RequirementLevel, BdoSpecRuleKinds.Requirement, Scope, varSet);
 
             help += requirementLevel switch
             {
@@ -189,7 +197,7 @@ namespace BindOpen.Plus.Commands
             }
             else
             {
-                var labels = option.Aliases?.Select(q => q?.Trim()).ToList();
+                var labels = option.Aliases?.Select(q => q?.Trim()).ToList() ?? new List<string> { option.Name };
                 if (shortMode)
                 {
                     label = labels.FirstOrDefault();
@@ -203,7 +211,7 @@ namespace BindOpen.Plus.Commands
                 {
                     var optionLabel = option.Label;
 
-                    var hasValue = optionLabel.ExtractTokens().Any(q => q.BdoKeyEquals(LabelFormatsExtensions.__This_Value));
+                    var hasValue = optionLabel.ExtractTokens().Any(q => q.BdoKeyEquals(BdoMetaDataProperties.Value));
 
                     var valueLabel = option.Title?[uiCulture, StringHelper.__Star] ?? (!string.IsNullOrEmpty(option.Name) ? option.Name : labels.FirstOrDefault());
 
@@ -236,9 +244,9 @@ namespace BindOpen.Plus.Commands
                         }
 
                         label = optionLabel.FormatFromTokens(
-                            BdoData.NewMetaSet(
-                                (LabelFormatsExtensions.__This_Name, label),
-                                (LabelFormatsExtensions.__This_Value, valueLabel)));
+                            BdoData.NewSet(
+                                (BdoMetaDataProperties.Name, label),
+                                (BdoMetaDataProperties.Value, valueLabel)));
                     }
                 }
             }

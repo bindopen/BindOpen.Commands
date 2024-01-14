@@ -1,4 +1,4 @@
-﻿using BindOpen.System.Data;
+﻿using BindOpen.Data.Meta;
 using System;
 
 namespace BindOpen.Plus.Commands
@@ -16,14 +16,14 @@ namespace BindOpen.Plus.Commands
 
         public static T Execute<T>(
             this T option,
-            IBdoExpression expression,
+            Predicate<IBdoMetaData> predicate,
             Action action)
             where T : IOption
         {
             if (option != null)
             {
                 option.Executions ??= new();
-                option.Executions.Add((expression, action));
+                option.Executions.Add((predicate, action));
             }
 
             return option;

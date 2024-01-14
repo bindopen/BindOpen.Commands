@@ -14,9 +14,9 @@ namespace BindOpen.Plus.Commands
         [Test, Order(4)]
         public void FromClassTest()
         {
-            var optionSet = BdoCommands.NewOptionSet<OptionFake>();
+            var optionSet = BdoCommands.NewOptionFrom<OptionFake>();
 
-            Assert.That(optionSet.Count == 3, "Bad argument parsing");
+            Assert.That(optionSet._Children?.Count == 3, "Bad argument parsing");
         }
     }
 }
