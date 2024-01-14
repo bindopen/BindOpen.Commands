@@ -1,5 +1,4 @@
-﻿using BindOpen.System.Data;
-using BindOpen.System.Data.Meta;
+﻿using BindOpen.Data.Meta;
 using System;
 using System.Collections.Generic;
 
@@ -10,6 +9,6 @@ namespace BindOpen.Plus.Commands
     /// </summary>
     public interface IOption : IBdoSpec
     {
-        List<(IBdoExpression Expression, Action)> Executions { get; set; }
+        List<(Predicate<IBdoMetaData> Condition, Action Action)> Executions { get; set; }
     }
 }

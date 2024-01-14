@@ -5,7 +5,7 @@ using System.Linq;
 namespace BindOpen.Plus.Commands
 {
     [TestFixture, Order(400)]
-    public class ArgumentsTests
+    public class ParsingTests
     {
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -45,14 +45,39 @@ namespace BindOpen.Plus.Commands
         }
 
         [Test, Order(3)]
+        public void ParseArgumentsWithBadLabelSpecTest()
+        {
+            var options = OptionSetFaker.CreateFlat();
+
+            var args = new[] { "--version" };
+
+            var scope = SystemData.Scope;
+            var parameters = scope.ParseArguments(args, options);
+            Assert.That(parameters?.Count == 1, "Bad argument parsing");
+        }
+
+        [Test, Order(4)]
+        public void ParseArgumentsWithoutSpecTest()
+        {
+            var args = new[] { "--version", "1.0", "-h", "-i 123" };
+
+            var scope = SystemData.Scope;
+            var log = SystemData.CreateLog();
+
+            var parameters = scope.ParseArguments(args, log: log);
+            Assert.That(parameters?.Count == 4, "Bad argument parsing");
+        }
+
+        [Test, Order(5)]
         public void ParseArgumentsTest()
         {
             var options = OptionSetFaker.CreateFlat();
 
             var args = new[] { "--version", "1.0", "-h", "-i 123" };
 
-            var parameters = SystemData.Scope.ParseArguments(args, options);
-            Assert.That(parameters.Count == 3, "Bad argument parsing");
+            var scope = SystemData.Scope;
+            var parameters = scope.ParseArguments(args, options);
+            Assert.That(parameters?.Count == 3, "Bad argument parsing");
         }
     }
 }

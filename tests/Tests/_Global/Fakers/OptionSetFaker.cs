@@ -1,7 +1,7 @@
-﻿using BindOpen.System.Data;
-using BindOpen.System.Data.Conditions;
-using BindOpen.System.Data.Meta;
-using BindOpen.System.Scoping.Script;
+﻿using BindOpen.Data;
+using BindOpen.Data.Meta;
+using BindOpen.Logging;
+using BindOpen.Scoping.Script;
 
 namespace BindOpen.Plus.Commands.Tests
 {
@@ -10,10 +10,11 @@ namespace BindOpen.Plus.Commands.Tests
     /// </summary>
     public static class OptionSetFaker
     {
-        public static IOptionSet CreateFlat() =>
-            BdoCommands.NewOptionSet(
+        public static IOption CreateFlat() =>
+            BdoCommands.NewOption(
                 "sample",
-                BdoCommands.NewOption("version", "--version", "-v")
+                BdoCommands.NewOption("version")
+                    .WithAliases("version", "--version", "-v")
                     .WithLabel(LabelFormats.NameSpaceValue)
                     .WithDataType(DataValueTypes.Text)
                     .AsRequired()
@@ -32,38 +33,50 @@ namespace BindOpen.Plus.Commands.Tests
                     .WithTitle("depth")
                     .WithDescription("The additional depth."),
 
-                BdoCommands.NewOption("help", "--help", "-h")
-                    .WithNullValue()
+                BdoCommands.NewOption("help")
+                    .WithAliases("help", "--help", "-h")
+                    .AsNullValue()
                 ,
-                BdoCommands.NewOption(LabelFormats.NameSpaceValue, DataValueTypes.Integer, "input", "--i", "-i")
+                BdoCommands.NewOption(LabelFormats.NameSpaceValue, DataValueTypes.Integer, "input")
+                    .WithAliases("input", "--i", "-i")
                     .WithTitle("inputs")
                     .WithDescription("The inputs of the application.")
                     .WithIndex(1)
                     .WithChildren(
-                        BdoCommands.NewOption("auto", "--a", "-auto")
+                        BdoCommands.NewOption("auto")
+                            .WithAliases("--a", "-auto")
                             .WithDescription("Indicates whether input is automatic."),
-                        BdoCommands.NewOption(DataValueTypes.Text, "file", "--f", "-f")
-                            .WithCondition((BdoCondition)BdoScript._Parent<IBdoMetaData>()._Has("auto"))
-                            .AsRequired((BdoCondition)BdoScript._Parent<IBdoMetaData>()._Has("file"))
+                        BdoCommands.NewOption(DataValueTypes.Text, "file")
+                            .WithAliases("file", "--f", "-f")
+                            .WithCondition(BdoScript._Parent<IBdoMetaData>()._Has("auto"))
+                            .AsForbidden(BdoScript._Parent<IBdoMetaData>()._Has("auto").ToCondition())
                             .Execute(() => Task_Inputs())
                 ),
-                BdoCommands.NewSectionOption(
+                BdoCommands.NewOption(
                     "output",
-                    BdoCommands.NewOption(LabelFormats.NameSpaceValue, "output", "--o", "-o"),
-                    BdoCommands.NewOption("auto", "--a", "-auto")
+                    BdoCommands.NewOption(LabelFormats.NameSpaceValue, "output")
+                        .WithAliases("output", "--o", "-o"),
+                    BdoCommands.NewOption("auto")
+                        .WithAliases("auto", "--a", "-auto")
                         .WithDescription("Indicates whether output is automatic."),
-                    BdoCommands.NewOption(DataValueTypes.Text, "file", "--f", "-f"),
-                    BdoCommands.NewSectionOption(
+                    BdoCommands.NewOption(DataValueTypes.Text, "file")
+                        .WithAliases("file", "--f", "-f"),
+                    BdoCommands.NewOption(
                         "sub.output",
-                        BdoCommands.NewOption(LabelFormats.NameSpaceValue, "sub.output", "--so", "-so"),
-                        BdoCommands.NewOption("sauto", "--a", "-sauto")
+                        BdoCommands.NewOption(LabelFormats.NameSpaceValue, "sub.output")
+                            .WithAliases("sub.output", "--so", "-so"),
+                        BdoCommands.NewOption("sauto")
+                            .WithAliases("sauto", "--a", "-sauto")
                             .WithDescription("Indicates whether output is automatic."),
-                        BdoCommands.NewOption(DataValueTypes.Text, "sfile", "--sf", "-sf")))
+                        BdoCommands.NewOption(DataValueTypes.Text, "sfile")
+                            .WithAliases("sfile", "--sf", "-sf")
+                    )
+                )
                     .WithTitle("outputs")
                     .WithDescription("The outputs of the application.")
                     .WithIndex(2)
             )
-            .WithDescription("Sample show you the way to simply specify the options of your application.");
+            .WithDescription("Sample shows you the way to simply specify the options of your application.");
 
         public static void Task_Version()
         {

@@ -1,5 +1,5 @@
-﻿using BindOpen.System.Data;
-using BindOpen.System.Data.Meta;
+﻿using BindOpen.Data;
+using BindOpen.Data.Meta;
 
 namespace BindOpen.Plus.Commands
 {
@@ -13,8 +13,8 @@ namespace BindOpen.Plus.Commands
         /// </summary>
         /// <param name="aliases">Aliases of the option to add.</param>
         public static Option NewOption(
-            params string[] aliases)
-            => NewOption(LabelFormats.OnlyName, RequirementLevels.Optional, aliases);
+            string name = null)
+            => NewOption(LabelFormats.OnlyName, RequirementLevels.Optional, name);
 
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
@@ -23,13 +23,13 @@ namespace BindOpen.Plus.Commands
         /// <param name="aliases">Aliases of the option to add.</param>
         public static Option NewOption(
             LabelFormats format,
-            params string[] aliases)
-            => NewOption(LabelFormats.OnlyName, DataValueTypes.Null, RequirementLevels.Optional, aliases);
+            string name = null)
+            => NewOption(format, DataValueTypes.Any, RequirementLevels.Optional, name);
 
         public static Option NewOption(
             DataValueTypes valueType,
-            params string[] aliases)
-            => NewOption(LabelFormats.NameSpaceValue, valueType, RequirementLevels.Optional, aliases);
+            string name = null)
+            => NewOption(LabelFormats.NameSpaceValue, valueType, RequirementLevels.Optional, name);
 
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
@@ -37,25 +37,8 @@ namespace BindOpen.Plus.Commands
         /// <param name="aliases">Aliases of the option to add.</param>
         public static Option NewOption(
             RequirementLevels requirementLevel,
-            params string[] aliases)
-            => NewOption(LabelFormats.OnlyName, requirementLevel, aliases);
-
-        /// <summary>
-        /// Instantiates a new instance of the OptionSpec class.
-        /// </summary>
-        /// <param name="nameKind">The name kind to consider.</param>
-        /// <param name="aliases">Aliases of the option to add.</param>
-        public static Option NewOption(
-            LabelFormats format,
-            RequirementLevels requirementLevel,
-            params string[] aliases)
-            => NewOption(format, DataValueTypes.Null, requirementLevel, aliases);
-
-        public static Option NewOption(
-            DataValueTypes valueType,
-            RequirementLevels requirementLevel,
-            params string[] aliases)
-            => NewOption(LabelFormats.NameSpaceValue, valueType, requirementLevel, aliases);
+            string name = null)
+            => NewOption(LabelFormats.OnlyName, requirementLevel, name);
 
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
@@ -64,9 +47,15 @@ namespace BindOpen.Plus.Commands
         /// <param name="aliases">Aliases of the option to add.</param>
         public static Option NewOption(
             LabelFormats format,
+            RequirementLevels requirementLevel,
+            string name = null)
+            => NewOption(format, DataValueTypes.Any, requirementLevel, name);
+
+        public static Option NewOption(
             DataValueTypes valueType,
-            params string[] aliases)
-            => NewOption(format, valueType, RequirementLevels.Optional, aliases);
+            RequirementLevels requirementLevel,
+            string name = null)
+            => NewOption(LabelFormats.NameSpaceValue, valueType, requirementLevel, name);
 
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
@@ -76,43 +65,73 @@ namespace BindOpen.Plus.Commands
         public static Option NewOption(
             LabelFormats format,
             DataValueTypes valueType,
+            string name = null)
+            => NewOption(format, valueType, RequirementLevels.Optional, name);
+
+        /// <summary>
+        /// Instantiates a new instance of the OptionSpec class.
+        /// </summary>
+        /// <param name="nameKind">The name kind to consider.</param>
+        /// <param name="aliases">Aliases of the option to add.</param>
+        public static Option NewOption(
+            LabelFormats format,
+            DataValueTypes valueType,
             RequirementLevels requirementLevel,
-            params string[] aliases)
+            string name = null)
         {
             var spec = BdoData.NewSpec<Option>();
 
             spec
                 .WithLabel(format)
-                .WithAliases(aliases)
+                .WithName(name)
                 .WithDataType(valueType)
-                .AddRequirement(requirementLevel)
-                .WithMinDataItemNumber((uint)(format.HasValue() ? 1 : 0))
-                .WithMaxDataItemNumber((uint)(format.HasName() ? 0 : 1));
+                .AddRequirement(requirementLevel);
 
             return spec;
         }
 
-        // Group
+        // Section
 
         /// <summary>
         /// Instantiates a new instance of the OptionSpec class.
         /// </summary>
         /// <param name="aliases">Aliases of the option to add.</param>
-        public static Option NewSectionOption(
+        public static Option NewOption(
             RequirementLevels requirementLevel,
             string name = null,
             params IOption[] children)
-            => NewOption(LabelFormats.Any, DataValueTypes.Null, requirementLevel)
+            => NewOption(LabelFormats.Any, DataValueTypes.Any, requirementLevel)
                 .WithName(name)
                 .WithChildren(children);
 
-        public static Option NewSectionOption(
+        public static Option NewOption(
             string name,
             params IOption[] children)
-            => NewSectionOption(RequirementLevels.Optional, name, children);
+            => NewOption(RequirementLevels.Optional, name, children);
 
-        public static Option NewSectionOption(
+        public static Option NewOption(
             params IOption[] children)
-            => NewSectionOption(null as string, children);
+            => NewOption(null as string, children);
+
+        // From
+
+        /// <summary>
+        /// Instantiates a new instance of the OptionSpec class.
+        /// </summary>
+        /// <param name="aliases">Aliases of the option to add.</param>
+        public static TOption NewOptionFrom<TType, TOption>(string name = null)
+            where TOption : IOption, new()
+        {
+            var options = BdoData.NewSpecFrom<TType, TOption>(name);
+
+            return options;
+        }
+
+        /// <summary>
+        /// Instantiates a new instance of the OptionSpec class.
+        /// </summary>
+        /// <param name="aliases">Aliases of the option to add.</param>
+        public static Option NewOptionFrom<TType>()
+            => NewOptionFrom<TType, Option>(null);
     }
 }

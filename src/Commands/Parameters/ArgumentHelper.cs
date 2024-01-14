@@ -1,9 +1,8 @@
-﻿using BindOpen.System.Data;
-using BindOpen.System.Data.Helpers;
-using BindOpen.System.Data.Meta;
-using BindOpen.System.Logging;
-using BindOpen.System.Scoping;
-using BindOpen.System.Scoping.Script;
+﻿using BindOpen.Data;
+using BindOpen.Data.Helpers;
+using BindOpen.Data.Meta;
+using BindOpen.Logging;
+using BindOpen.Scoping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,8 +58,9 @@ namespace BindOpen.Plus.Commands
         public static IParameterSet ParseArguments(
             this IBdoScope scope,
             string[] arguments,
-            IOptionSet optionSet = null,
-            bool allowMissingItems = false,
+            IOption optionRoot = null,
+            bool checkArguments = true,
+            IBdoMetaSet varSet = null,
             IBdoLog log = null)
         {
             IParameterSet paramSet = new ParameterSet();
@@ -79,30 +79,30 @@ namespace BindOpen.Plus.Commands
                         Option option = null;
 
                         int aliasIndex = -2;
-                        if (optionSet != null)
+                        if (optionRoot != null)
                         {
-                            option = optionSet
-                               .FirstOrDefault(p => argSt.IsArgumentMarching(p, out aliasIndex)) as Option;
+                            option = optionRoot?._Children.FirstOrDefault(p => argSt.IsArgumentMarching(p as IOption, out aliasIndex)) as Option;
                         }
 
-                        if (optionSet == null || option == null && allowMissingItems)
+                        if (optionRoot == null || option == null)
                         {
-                            param = BdoData.NewMetaScalar<object, Parameter>(argSt, DataValueTypes.Text);
+                            param = BdoData.NewScalar<object, Parameter>(argSt, DataValueTypes.Text);
                             param.WithData(arguments.GetAt(index));
                             paramSet.Add(param);
                         }
-                        else if (option != null && optionSet != null)
+                        else if (option != null && optionRoot != null)
                         {
                             if ((option.DataType?.ValueType ?? DataValueTypes.Any) == DataValueTypes.Any)
                             {
                                 option.WithDataType(DataValueTypes.Text);
                             }
-                            param = BdoData.NewMetaScalar<object, Parameter>(option.Name, option.DataType.ValueType);
+                            param = BdoData.NewScalar<object, Parameter>(option.Name, option.DataType.ValueType)
+                                .WithSpec(option);
 
-                            param.WithSpec(option);
+                            var localVarSet = BdoData.NewSet(varSet?.ToArray());
+                            localVarSet.Add(BdoData.__VarName_This, param);
 
-                            var varSet = BdoData.NewMetaSet((BdoScript.__VarName_This, param));
-                            var requirementLevel = param.WhatRequirement(scope, varSet, log);
+                            var requirementLevel = param.GetRequirementLevel(scope, localVarSet, log);
 
                             if (requirementLevel == RequirementLevels.None || requirementLevel.IsPossible())
                             {
@@ -117,23 +117,23 @@ namespace BindOpen.Plus.Commands
                                         if (tokenSet == null)
                                         {
                                             index++;
-                                            argSt += " " + arguments[index];
+                                            argSt += " " + arguments.GetAt(index);
                                         }
                                     }
 
                                     if (tokenSet?.Count > 0)
                                     {
                                         tokenSet.Map(
-                                            (LabelFormatsExtensions.__This_Value, q =>
+                                            (BdoMetaDataProperties.Value, q =>
                                             {
-                                                var obj = q.GetData<string>().ToObject(q.DataType?.ValueType ?? DataValueTypes.Any);
+                                                var obj = q.GetData<string>().ToObject(option.DataType?.ValueType ?? DataValueTypes.Any);
                                                 param.WithData(obj);
                                             }
                                         )
                                         );
                                     }
 
-                                    if (option.Label?.Contains(LabelFormatsExtensions.__This_Value) != true)
+                                    if (option.Label?.Contains(BdoMetaDataProperties.Value) != true)
                                     {
                                         if (param.DataType.ValueType == DataValueTypes.Boolean
                                             || param.DataType.ValueType == DataValueTypes.Any)
@@ -156,7 +156,15 @@ namespace BindOpen.Plus.Commands
                 }
             }
 
-            scope.Check(paramSet, optionSet, log: log);
+            if (checkArguments)
+            {
+                var valid = paramSet.Check(optionRoot, scope, varSet, log);
+
+                if (!valid)
+                {
+                    paramSet = null;
+                }
+            }
 
             return paramSet;
         }
@@ -216,7 +224,7 @@ namespace BindOpen.Plus.Commands
             if (!string.IsNullOrEmpty(pattern))
             {
                 arg?.ExtractTokenMetas(pattern)?.Map(
-                    (LabelFormatsExtensions.__This_Name, q => { arg = q.GetData<string>(); }
+                    (BdoMetaDataProperties.Name, q => { arg = q.GetData<string>(); }
                 )
                 );
 

@@ -6,7 +6,7 @@
     <PackageId>BindOpen.Plus.Commands</PackageId>
     <Product>BindOpen.Plus.Commands</Product>
     <Company>BindOpen</Company>
-    <Copyright>Copyright ©BindOpen 2011-2023</Copyright>
+    <Copyright>Copyright ©BindOpen 2011-2024</Copyright>
     <Description>A straightforward and comprehensive API for manipulating command-line arguments and handling related tasks.</Description>
     <Authors>Sumer Team</Authors>
     <RootNamespace>BindOpen.Plus.Commands</RootNamespace>
@@ -40,8 +40,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BindOpen.System.Data" Version="1.2.92" />
-    <PackageReference Include="BindOpen.System.Scoping" Version="1.2.92" />
+    <PackageReference Include="BindOpen.Kernel.Data" Version="1.2.159" />
+    <PackageReference Include="BindOpen.Kernel.Scoping" Version="1.2.159" />
   </ItemGroup>
 
   <ItemGroup>
