@@ -3,7 +3,7 @@ using BindOpen.Data.Meta;
 using BindOpen.Logging;
 using BindOpen.Scoping.Script;
 
-namespace BindOpen.Plus.Commands.Tests
+namespace BindOpen.Commands.Tests
 {
     /// <summary>
     /// This class represents a fake class.

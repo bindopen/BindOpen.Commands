@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BindOpen.Plus.Commands
+namespace BindOpen.Commands
 {
     /// <summary>
     /// 

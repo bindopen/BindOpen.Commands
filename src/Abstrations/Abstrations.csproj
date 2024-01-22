@@ -2,26 +2,26 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <AssemblyName>BindOpen.Plus.Commands.Abstractions</AssemblyName>
-    <PackageId>BindOpen.Plus.Commands.Abstractions</PackageId>
-    <Product>BindOpen.Plus.Commands</Product>
+    <AssemblyName>BindOpen.Commands.Abstractions</AssemblyName>
+    <PackageId>BindOpen.Commands.Abstractions</PackageId>
+    <Product>BindOpen.Commands</Product>
     <Company>BindOpen</Company>
     <Copyright>Copyright ©BindOpen 2011-2024</Copyright>
-    <Description>This package provides the core abstractions of BindOpen.Plus.Commands.</Description>
+    <Description>This package provides the core abstractions of BindOpen.Commands.</Description>
     <Authors>Sumer Team</Authors>
-    <RootNamespace>BindOpen.Plus.Commands.Abstractions</RootNamespace>
-    <PackageProjectUrl>https://github.com/bindopen/BindOpen.Plus.Commands</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/bindopen/BindOpen.Plus.Commands.git</RepositoryUrl>
+    <RootNamespace>BindOpen.Commands.Abstractions</RootNamespace>
+    <PackageProjectUrl>https://github.com/bindopen/BindOpen.Commands</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/bindopen/BindOpen.Commands.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>bindopen_icon.png</PackageIcon>
     <PackageIconUrl>https://storage.bindopen.org/org/icons/bindopen_icon_64x64.png</PackageIconUrl>
     <SignAssembly>true</SignAssembly>
-    <PackageReadmeFile>Readme.md</PackageReadmeFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>BindOpen.Plus.Commands.xml</DocumentationFile>
+    <DocumentationFile>BindOpen.Commands.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,14 +33,14 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="..\..\Readme.md">
+    <None Include="..\..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BindOpen.Kernel.Abstractions" Version="1.2.159" />
+    <PackageReference Include="BindOpen.Abstractions" Version="1.2.159" />
   </ItemGroup>
 
 </Project>
