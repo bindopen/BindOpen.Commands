@@ -4,7 +4,7 @@ using BindOpen.Logging;
 using BindOpen.Scoping;
 using System;
 
-namespace BindOpen.Plus.Commands
+namespace BindOpen.Commands
 {
     /// <summary>
     /// 

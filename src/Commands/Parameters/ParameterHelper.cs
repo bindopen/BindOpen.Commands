@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace BindOpen.Plus.Commands
+namespace BindOpen.Commands
 {
     /// <summary>
     /// This class represents the application argument parser.

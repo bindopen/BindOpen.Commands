@@ -1,4 +1,4 @@
-# BindOpen.Plus.Commands
+# BindOpen.Commands
 
 ![BindOpen logo](https://storage.bindopen.org/img/logos/logo_bindopen.png)
 
