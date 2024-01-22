@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BindOpen.Plus.Commands
+namespace BindOpen.Commands
 {
     /// <summary>
     /// This class represents a option parser.

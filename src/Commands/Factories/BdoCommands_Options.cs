@@ -1,7 +1,7 @@
 ﻿using BindOpen.Data;
 using BindOpen.Data.Meta;
 
-namespace BindOpen.Plus.Commands
+namespace BindOpen.Commands
 {
     /// <summary>
     /// This class represents a option factory.

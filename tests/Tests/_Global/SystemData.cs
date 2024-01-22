@@ -4,7 +4,7 @@ using BindOpen.Logging.Loggers;
 using BindOpen.Scoping;
 using BindOpen.Scoping.Script;
 
-namespace BindOpen.Plus.Commands.Tests
+namespace BindOpen.Commands.Tests
 {
     public static class SystemData
     {

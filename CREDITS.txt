@@ -1,10 +1,10 @@
-BindOpen.Framework
-Copyright (c) 2020 BindOpen
+BindOpen.Commands
+Copyright (c) 2024 BindOpen
 
 This product includes software developed at
 The BindOpen Labs (https://www.bindopen.org).
 
-BindOpen.Framework includes works distributed under the licenses listed below.
+BindOpen includes works distributed under the licenses listed below.
 The full text for most of the licenses listed below can be found in the
 LICENSE file accompanying each work. The original copyright notices have been
 preserved within the respective files and or packages. Please refer to the
@@ -12,18 +12,25 @@ specific files and/or packages for more detailed information about the authors,
 copyright notices, and licenses.
 
 
-Newtonsoft.Json
----------------
-Website:      https://www.newtonsoft.com/json
-Copyright:    Copyright (c) 2007 James Newton-King
+Automapper
+----------
+Website:      https://automapper.org/
+Copyright:    Copyright (c) 2010 Jimmy Bogard
 License:      The MIT License (MIT)
 
 
-Npgsql
-------
-Website:      http://www.npgsql.org
-Copyright:    Copyright (c) 2002-2019, Npgsql
-License:      PostgreSQL License
+Bogus
+-----
+Website:      https://github.com/bchavez/Bogus
+Copyright:    Copyright (c) 2015 Brian Chavez 
+License:      The MIT License (MIT)
+
+
+DeepEqual
+---------
+Website:      https://github.com/jamesfoster/DeepEqual
+Copyright:    Copyright (c) 2014 James Foster
+License:      The MIT License (MIT)
 
 
 NUnit

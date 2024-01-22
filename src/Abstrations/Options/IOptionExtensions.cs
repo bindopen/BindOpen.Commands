@@ -1,7 +1,7 @@
 ﻿using BindOpen.Data.Meta;
 using System;
 
-namespace BindOpen.Plus.Commands
+namespace BindOpen.Commands
 {
     /// <summary>
     /// 

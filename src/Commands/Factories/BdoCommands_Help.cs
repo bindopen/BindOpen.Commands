@@ -1,6 +1,6 @@
 ﻿using BindOpen.Scoping;
 
-namespace BindOpen.Plus.Commands
+namespace BindOpen.Commands
 {
     /// <summary>
     /// This class represents a option factory.
