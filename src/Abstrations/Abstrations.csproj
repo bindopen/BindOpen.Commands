@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>BindOpen.Commands.Abstractions</AssemblyName>
     <PackageId>BindOpen.Commands.Abstractions</PackageId>
     <Product>BindOpen.Commands</Product>
@@ -40,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BindOpen.Abstractions" Version="1.2.159" />
+    <PackageReference Include="BindOpen.Abstractions" Version="1.2.166" />
   </ItemGroup>
 
 </Project>
