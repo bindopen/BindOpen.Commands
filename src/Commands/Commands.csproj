@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>BindOpen.Commands</AssemblyName>
     <PackageId>BindOpen.Commands</PackageId>
     <Product>BindOpen.Commands</Product>
@@ -40,8 +40,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BindOpen.Data" Version="1.2.159" />
-    <PackageReference Include="BindOpen.Scoping" Version="1.2.159" />
+    <PackageReference Include="BindOpen.Data" Version="1.2.166" />
+    <PackageReference Include="BindOpen.Scoping" Version="1.2.166" />
   </ItemGroup>
 
   <ItemGroup>
