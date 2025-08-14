@@ -1,11 +1,10 @@
 ﻿using BindOpen.Data.Meta;
 
-namespace BindOpen.Commands
+namespace BindOpen.Commands;
+
+/// <summary>
+/// 
+/// </summary>
+public interface IParameter : IBdoMetaScalar
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface IParameter : IBdoMetaScalar
-    {
-    }
 }

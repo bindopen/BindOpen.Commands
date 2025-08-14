@@ -1,11 +1,10 @@
 ﻿using BindOpen.Data.Meta;
 
-namespace BindOpen.Commands
+namespace BindOpen.Commands;
+
+/// <summary>
+/// 
+/// </summary>
+public interface IParameterSet : IBdoMetaNode
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface IParameterSet : IBdoMetaNode
-    {
-    }
 }
