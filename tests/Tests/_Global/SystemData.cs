@@ -4,64 +4,63 @@ using BindOpen.Logging.Loggers;
 using BindOpen.Scoping;
 using BindOpen.Scoping.Script;
 
-namespace BindOpen.Commands.Tests
+namespace BindOpen.Commands.Tests;
+
+public static class SystemData
 {
-    public static class SystemData
+    public static IBdoLog CreateLog() =>
+        BdoLogging.NewLog()
+            .WithLoggers(BdoLogging.NewLogger<BdoTraceLogger>());
+
+    static IBdoScope _appScope = null;
+
+    /// <summary>
+    /// The global scope.
+    /// </summary>
+    public static IBdoScope Scope
     {
-        public static IBdoLog CreateLog() =>
-            BdoLogging.NewLog()
-                .WithLogger(BdoLogging.NewLogger<BdoTraceLogger>());
-
-        static IBdoScope _appScope = null;
-
-        /// <summary>
-        /// The global scope.
-        /// </summary>
-        public static IBdoScope Scope
+        get
         {
-            get
+            if (_appScope == null)
             {
-                if (_appScope == null)
-                {
-                    _appScope = BdoScoping.NewScope();
-                    _appScope.LoadExtensions(q => q
-                        .AddAssemblyFrom<OptionFake>());
-                }
-
-                return _appScope;
+                _appScope = BdoScoping.NewScope();
+                _appScope.LoadExtensions(q => q
+                    .AddAssemblyFrom<OptionFake>());
             }
+
+            return _appScope;
         }
+    }
 
-        static string _workingFolder;
-        static IBdoScriptInterpreter _scriptInterpreter;
+    static string _workingFolder;
+    static IBdoScriptInterpreter _scriptInterpreter;
 
-        /// <summary>
-        /// The global working folder.
-        /// </summary>
-        public static string WorkingFolder
+    /// <summary>
+    /// The global working folder.
+    /// </summary>
+    public static string WorkingFolder
+    {
+        get
         {
-            get
+            if (_workingFolder == null)
             {
-                if (_workingFolder == null)
-                {
-                    _workingFolder = (FileHelper.GetAppRootFolderPath() + @"temp\").ToPath();
-                }
-
-                return _workingFolder;
+                _workingFolder = (FileHelper.GetAppRootFolderPath() + @"temp\").ToPath();
             }
+
+            return _workingFolder;
         }
+    }
 
-        public static IBdoScriptInterpreter ScriptInterpreter
+    public static IBdoScriptInterpreter ScriptInterpreter
+    {
+        get
         {
-            get
+            if (_scriptInterpreter == null)
             {
-                if (_scriptInterpreter == null)
-                {
-                    _scriptInterpreter = Scope.Interpreter; ;
-                }
-
-                return _scriptInterpreter;
+                _scriptInterpreter = Scope.Interpreter; ;
             }
+
+            return _scriptInterpreter;
         }
     }
 }

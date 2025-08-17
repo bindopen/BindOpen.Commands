@@ -1,25 +1,24 @@
 ﻿using BindOpen.Data.Meta;
 
-namespace BindOpen.Commands
+namespace BindOpen.Commands;
+
+/// <summary>
+/// This class represents a option set.
+/// </summary>
+public class Parameter : BdoMetaScalar, IParameter
 {
+    // -------------------------------------------------------------
+    // CONSTRUCTORS
+    // -------------------------------------------------------------
+
+    #region Constructors
+
     /// <summary>
-    /// This class represents a option set.
+    /// Instantiates a new instance of the Option class.
     /// </summary>
-    public class Parameter : BdoMetaScalar, IParameter
+    public Parameter() : base()
     {
-        // -------------------------------------------------------------
-        // CONSTRUCTORS
-        // -------------------------------------------------------------
-
-        #region Constructors
-
-        /// <summary>
-        /// Instantiates a new instance of the Option class.
-        /// </summary>
-        public Parameter() : base()
-        {
-        }
-
-        #endregion
     }
+
+    #endregion
 }
