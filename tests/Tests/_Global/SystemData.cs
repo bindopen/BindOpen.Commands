@@ -10,7 +10,7 @@ public static class SystemData
 {
     public static IBdoLog CreateLog() =>
         BdoLogging.NewLog()
-            .WithLogger(BdoLogging.NewLogger<BdoTraceLogger>());
+            .WithLoggers(BdoLogging.NewLogger<BdoTraceLogger>());
 
     static IBdoScope _appScope = null;
 
