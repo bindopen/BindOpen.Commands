@@ -1,14 +1,14 @@
 ﻿using BindOpen.Data.Meta;
+using BindOpen.Data.Schema;
 using System;
 using System.Collections.Generic;
 
-namespace BindOpen.Commands
+namespace BindOpen.Commands;
+
+/// <summary>
+/// 
+/// </summary>
+public interface IOption : IBdoSchema
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public interface IOption : IBdoSpec
-    {
-        List<(Predicate<IBdoMetaData> Condition, Action Action)> Executions { get; set; }
-    }
+    List<(Predicate<IBdoMetaData> Condition, Action Action)> Executions { get; set; }
 }
